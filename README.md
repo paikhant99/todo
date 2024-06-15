@@ -1,16 +1,29 @@
 # todo
 
-A new Flutter project.
+Todo Flutter APP
 
-## Getting Started
+## First things Goes
 
-This project is a starting point for a Flutter application.
+This project is a to-do app for students and observers to record their tasks: daily, milestones and goals to be reviewed easily.
 
-A few resources to get you started if this is your first Flutter project:
+## Mock Application Design
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+Versatile Single Screen Application Figure for both Mobile(Ios and Android).
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+Temporarily apply on 'Material Design'
+
+|Home Screen (Android)| Home Screen (Iphone)|
+|:-:|:-:|
+|<img src="./assets/home_screen_android.png" width="200" height="400" />|<img src="./assets/home_screen_iphone.png" width="200" height="400" />|
+
+## Data & Backend Integration
+
+* Sqlite
+
+## Further Features To Add on
+
+* Login Authenicating
+* Syncing on network (Accessible at anywhere)
+* Assigning tasks to someone
+
+This repository can be used for Learning Purpose by Anyone.
