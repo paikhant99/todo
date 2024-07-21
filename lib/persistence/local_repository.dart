@@ -17,8 +17,16 @@ class LocalRepository {
 
   LocalRepository({required this.taskDao});
 
-  Future<List<Task>> loadTasks() {
-    return taskDao.loadAll();
+  Future<List<Task>> loadAllTasksByDate(String date) {
+    return taskDao.loadByDate(date);
+  }
+
+  Future<List<Task>> loadUnCompletedTasksByDate(String date) {
+    return taskDao.loadByDateAndStatus(date, 0);
+  }
+
+  Future<List<Task>> loadCompletedTasksByDate(String date) {
+    return taskDao.loadByDateAndStatus(date, 1);
   }
 
   Future<int> createTask(Task task) {
@@ -29,7 +37,7 @@ class LocalRepository {
     return taskDao.updateCompleted(taskId, isCompleted);
   }
 
-  Future<int> deletTask(int taskId) {
+  Future<int> deleteTask(int taskId) {
     return taskDao.delete(taskId);
   }
 }
@@ -47,10 +55,21 @@ class TaskDao {
   TaskDao({required this.db});
 
   /*
-    Retrieve All Tasks from 'tasks' Table
+    Retrieve All Tasks By Specified 'date' from 'tasks' Table
   */
-  Future<List<Task>> loadAll() async {
-    var tasks = await db.query(tasksTableName);
+  Future<List<Task>> loadByDate(String date) async {
+    var tasks = await db
+        .query(tasksTableName, where: 'reminder_date = ?', whereArgs: [date]);
+    return tasks.map((task) => Task.fromJson(task)).toList();
+  }
+
+  /*
+    Retrieve Tasks By Specified 'date' and 'status' from 'tasks' Table
+  */
+  Future<List<Task>> loadByDateAndStatus(String date, int status) async {
+    var tasks = await db.query(tasksTableName,
+        where: 'reminder_date = ? AND completed = ?',
+        whereArgs: [date, status]);
     return tasks.map((task) => Task.fromJson(task)).toList();
   }
 
@@ -79,6 +98,7 @@ class TaskDao {
 class SQLiteDatabaseImpl {
   /* 
     Comments - 
+    FIXME : Change reminder_date type to INT as milliseconds
   */
 
   static const String dbName = "todos_database.db";
