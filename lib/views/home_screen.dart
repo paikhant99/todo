@@ -4,7 +4,8 @@ import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
-import 'package:todo/models.dart';
+import 'package:todo/constants.dart';
+import 'package:todo/persistence/models.dart';
 import 'package:todo/all_tasks_viewmodel.dart';
 import 'package:todo/views/all_tasks_page.dart';
 import 'package:todo/views/onprogress_tasks_page.dart';
@@ -21,14 +22,15 @@ class _HomeScreenState extends State<HomeScreen> {
     Comments - 
   */
   int currentPageIndex = 0;
-  static final UnmodifiableListView<Widget> _tabs = UnmodifiableListView([const OnProgressTasksPage(), const AllTasksPage()]);
+  static final UnmodifiableListView<Widget> _tabs =
+      UnmodifiableListView([const OnProgressTasksPage(), const AllTasksPage()]);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         resizeToAvoidBottomInset: true,
         appBar: AppBar(
-          title: const Text('Facere'),
+          title: const Text(APP_TITLE),
         ),
         body: _tabs[currentPageIndex],
         floatingActionButton: FloatingActionButton(
@@ -57,7 +59,8 @@ class _HomeScreenState extends State<HomeScreen> {
             selectedIndex: currentPageIndex,
             destinations: const [
               NavigationDestination(icon: Icon(Icons.task), label: "Today's"),
-              NavigationDestination(icon: Icon(Icons.calendar_month), label: "Calendar's")
+              NavigationDestination(
+                  icon: Icon(Icons.calendar_month), label: "Calendar's")
             ],
           ),
         ));
@@ -76,7 +79,7 @@ class _AddNewTaskBottomSheetState extends State<AddNewTaskBottomSheet> {
     Comments - 
   */
 
-  String _timeChosen = "Choose Time";
+  var _startTimeChosen = "Choose Time";
   var _endTimeChosen = "Choose Time";
   String _dateChosen = DateFormat('M/d/y').format(DateTime.now());
   final TextEditingController _txtEditController = TextEditingController();
@@ -163,12 +166,12 @@ class _AddNewTaskBottomSheetState extends State<AddNewTaskBottomSheet> {
                                                         TimeOfDay.now());
                                             setState(() {
                                               if (timeChosen != null) {
-                                                _timeChosen =
+                                                _startTimeChosen =
                                                     timeChosen.format(context);
                                               }
                                             });
                                           },
-                                          child: Text(_timeChosen)),
+                                          child: Text(_startTimeChosen)),
                                     )
                                   ],
                                 ),
@@ -240,9 +243,7 @@ class _AddNewTaskBottomSheetState extends State<AddNewTaskBottomSheet> {
                     padding: const EdgeInsets.all(8.0),
                     child: ElevatedButton(
                         onPressed: () {
-                          Provider.of<AllTasksViewModel>(
-                                  context,
-                                  listen: false)
+                          Provider.of<AllTasksViewModel>(context, listen: false)
                               .addTask(
                                   _txtEditController.text.isEmpty
                                       ? null
@@ -250,9 +251,14 @@ class _AddNewTaskBottomSheetState extends State<AddNewTaskBottomSheet> {
                                           taskId: null,
                                           taskDesc: _txtEditController.text,
                                           taskDate: _dateChosen,
-                                          taskTime: _timeChosen == 'Choose Time'
-                                              ? null
-                                              : _timeChosen,
+                                          taskStartTime:
+                                              _startTimeChosen == 'Choose Time'
+                                                  ? null
+                                                  : _startTimeChosen,
+                                          taskEndTime:
+                                              _endTimeChosen == 'Choose Time'
+                                                  ? null
+                                                  : _endTimeChosen,
                                           isCompleted: 0),
                                   _dateChosen);
                           Navigator.pop(context);

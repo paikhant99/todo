@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:todo/constants.dart';
 import 'package:todo/persistence/local_repository.dart';
 import 'package:todo/all_tasks_viewmodel.dart';
 import 'package:todo/views/completed_all_tasks_screen.dart';
@@ -39,7 +40,7 @@ class TodoApp extends StatelessWidget {
             '/completed_all_tasks': (context) =>
                 const CompletedAllTasksScreen(),
           },
-          title: 'Facerer App',
+          title: APP_TITLE,
         ));
   }
 }

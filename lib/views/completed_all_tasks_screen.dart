@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:todo/all_tasks_viewmodel.dart';
+import 'package:todo/constants.dart';
 import 'package:todo/views/customs.dart';
 
 class CompletedAllTasksScreen extends StatelessWidget {
@@ -13,7 +14,7 @@ class CompletedAllTasksScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Facerer'),
+        title: const Text(APP_TITLE),
       ),
       body: Column(
         children: [

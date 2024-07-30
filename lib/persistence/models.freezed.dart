@@ -28,14 +28,18 @@ mixin _$Task {
   String get taskDesc => throw _privateConstructorUsedError;
   @JsonKey(name: "task_desc")
   set taskDesc(String value) => throw _privateConstructorUsedError;
-  @JsonKey(name: "reminder_date")
+  @JsonKey(name: "task_date")
   String get taskDate => throw _privateConstructorUsedError;
-  @JsonKey(name: "reminder_date")
+  @JsonKey(name: "task_date")
   set taskDate(String value) => throw _privateConstructorUsedError;
-  @JsonKey(name: "reminder_time")
-  String? get taskTime => throw _privateConstructorUsedError;
-  @JsonKey(name: "reminder_time")
-  set taskTime(String? value) => throw _privateConstructorUsedError;
+  @JsonKey(name: "start_time")
+  String? get taskStartTime => throw _privateConstructorUsedError;
+  @JsonKey(name: "start_time")
+  set taskStartTime(String? value) => throw _privateConstructorUsedError;
+  @JsonKey(name: "end_time")
+  String? get taskEndTime => throw _privateConstructorUsedError;
+  @JsonKey(name: "end_time")
+  set taskEndTime(String? value) => throw _privateConstructorUsedError;
   @JsonKey(name: "completed")
   int get isCompleted => throw _privateConstructorUsedError;
   @JsonKey(name: "completed")
@@ -54,8 +58,9 @@ abstract class $TaskCopyWith<$Res> {
   $Res call(
       {@JsonKey(name: "id") int? taskId,
       @JsonKey(name: "task_desc") String taskDesc,
-      @JsonKey(name: "reminder_date") String taskDate,
-      @JsonKey(name: "reminder_time") String? taskTime,
+      @JsonKey(name: "task_date") String taskDate,
+      @JsonKey(name: "start_time") String? taskStartTime,
+      @JsonKey(name: "end_time") String? taskEndTime,
       @JsonKey(name: "completed") int isCompleted});
 }
 
@@ -75,7 +80,8 @@ class _$TaskCopyWithImpl<$Res, $Val extends Task>
     Object? taskId = freezed,
     Object? taskDesc = null,
     Object? taskDate = null,
-    Object? taskTime = freezed,
+    Object? taskStartTime = freezed,
+    Object? taskEndTime = freezed,
     Object? isCompleted = null,
   }) {
     return _then(_value.copyWith(
@@ -91,9 +97,13 @@ class _$TaskCopyWithImpl<$Res, $Val extends Task>
           ? _value.taskDate
           : taskDate // ignore: cast_nullable_to_non_nullable
               as String,
-      taskTime: freezed == taskTime
-          ? _value.taskTime
-          : taskTime // ignore: cast_nullable_to_non_nullable
+      taskStartTime: freezed == taskStartTime
+          ? _value.taskStartTime
+          : taskStartTime // ignore: cast_nullable_to_non_nullable
+              as String?,
+      taskEndTime: freezed == taskEndTime
+          ? _value.taskEndTime
+          : taskEndTime // ignore: cast_nullable_to_non_nullable
               as String?,
       isCompleted: null == isCompleted
           ? _value.isCompleted
@@ -113,8 +123,9 @@ abstract class _$$TaskImplCopyWith<$Res> implements $TaskCopyWith<$Res> {
   $Res call(
       {@JsonKey(name: "id") int? taskId,
       @JsonKey(name: "task_desc") String taskDesc,
-      @JsonKey(name: "reminder_date") String taskDate,
-      @JsonKey(name: "reminder_time") String? taskTime,
+      @JsonKey(name: "task_date") String taskDate,
+      @JsonKey(name: "start_time") String? taskStartTime,
+      @JsonKey(name: "end_time") String? taskEndTime,
       @JsonKey(name: "completed") int isCompleted});
 }
 
@@ -131,7 +142,8 @@ class __$$TaskImplCopyWithImpl<$Res>
     Object? taskId = freezed,
     Object? taskDesc = null,
     Object? taskDate = null,
-    Object? taskTime = freezed,
+    Object? taskStartTime = freezed,
+    Object? taskEndTime = freezed,
     Object? isCompleted = null,
   }) {
     return _then(_$TaskImpl(
@@ -147,9 +159,13 @@ class __$$TaskImplCopyWithImpl<$Res>
           ? _value.taskDate
           : taskDate // ignore: cast_nullable_to_non_nullable
               as String,
-      taskTime: freezed == taskTime
-          ? _value.taskTime
-          : taskTime // ignore: cast_nullable_to_non_nullable
+      taskStartTime: freezed == taskStartTime
+          ? _value.taskStartTime
+          : taskStartTime // ignore: cast_nullable_to_non_nullable
+              as String?,
+      taskEndTime: freezed == taskEndTime
+          ? _value.taskEndTime
+          : taskEndTime // ignore: cast_nullable_to_non_nullable
               as String?,
       isCompleted: null == isCompleted
           ? _value.isCompleted
@@ -165,8 +181,9 @@ class _$TaskImpl with DiagnosticableTreeMixin implements _Task {
   _$TaskImpl(
       {@JsonKey(name: "id") required this.taskId,
       @JsonKey(name: "task_desc") required this.taskDesc,
-      @JsonKey(name: "reminder_date") required this.taskDate,
-      @JsonKey(name: "reminder_time") required this.taskTime,
+      @JsonKey(name: "task_date") required this.taskDate,
+      @JsonKey(name: "start_time") required this.taskStartTime,
+      @JsonKey(name: "end_time") required this.taskEndTime,
       @JsonKey(name: "completed") required this.isCompleted});
 
   factory _$TaskImpl.fromJson(Map<String, dynamic> json) =>
@@ -179,18 +196,21 @@ class _$TaskImpl with DiagnosticableTreeMixin implements _Task {
   @JsonKey(name: "task_desc")
   String taskDesc;
   @override
-  @JsonKey(name: "reminder_date")
+  @JsonKey(name: "task_date")
   String taskDate;
   @override
-  @JsonKey(name: "reminder_time")
-  String? taskTime;
+  @JsonKey(name: "start_time")
+  String? taskStartTime;
+  @override
+  @JsonKey(name: "end_time")
+  String? taskEndTime;
   @override
   @JsonKey(name: "completed")
   int isCompleted;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'Task(taskId: $taskId, taskDesc: $taskDesc, taskDate: $taskDate, taskTime: $taskTime, isCompleted: $isCompleted)';
+    return 'Task(taskId: $taskId, taskDesc: $taskDesc, taskDate: $taskDate, taskStartTime: $taskStartTime, taskEndTime: $taskEndTime, isCompleted: $isCompleted)';
   }
 
   @override
@@ -201,7 +221,8 @@ class _$TaskImpl with DiagnosticableTreeMixin implements _Task {
       ..add(DiagnosticsProperty('taskId', taskId))
       ..add(DiagnosticsProperty('taskDesc', taskDesc))
       ..add(DiagnosticsProperty('taskDate', taskDate))
-      ..add(DiagnosticsProperty('taskTime', taskTime))
+      ..add(DiagnosticsProperty('taskStartTime', taskStartTime))
+      ..add(DiagnosticsProperty('taskEndTime', taskEndTime))
       ..add(DiagnosticsProperty('isCompleted', isCompleted));
   }
 
@@ -223,8 +244,9 @@ abstract class _Task implements Task {
   factory _Task(
       {@JsonKey(name: "id") required int? taskId,
       @JsonKey(name: "task_desc") required String taskDesc,
-      @JsonKey(name: "reminder_date") required String taskDate,
-      @JsonKey(name: "reminder_time") required String? taskTime,
+      @JsonKey(name: "task_date") required String taskDate,
+      @JsonKey(name: "start_time") required String? taskStartTime,
+      @JsonKey(name: "end_time") required String? taskEndTime,
       @JsonKey(name: "completed") required int isCompleted}) = _$TaskImpl;
 
   factory _Task.fromJson(Map<String, dynamic> json) = _$TaskImpl.fromJson;
@@ -240,15 +262,20 @@ abstract class _Task implements Task {
   @JsonKey(name: "task_desc")
   set taskDesc(String value);
   @override
-  @JsonKey(name: "reminder_date")
+  @JsonKey(name: "task_date")
   String get taskDate;
-  @JsonKey(name: "reminder_date")
+  @JsonKey(name: "task_date")
   set taskDate(String value);
   @override
-  @JsonKey(name: "reminder_time")
-  String? get taskTime;
-  @JsonKey(name: "reminder_time")
-  set taskTime(String? value);
+  @JsonKey(name: "start_time")
+  String? get taskStartTime;
+  @JsonKey(name: "start_time")
+  set taskStartTime(String? value);
+  @override
+  @JsonKey(name: "end_time")
+  String? get taskEndTime;
+  @JsonKey(name: "end_time")
+  set taskEndTime(String? value);
   @override
   @JsonKey(name: "completed")
   int get isCompleted;

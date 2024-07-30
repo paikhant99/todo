@@ -1,7 +1,7 @@
 import 'dart:collection';
 
 import 'package:flutter/widgets.dart';
-import 'package:todo/models.dart';
+import 'package:todo/persistence/models.dart';
 import 'package:todo/persistence/local_repository.dart';
 
 class AllTasksViewModel extends ChangeNotifier {

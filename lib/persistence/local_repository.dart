@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
-import 'package:todo/models.dart';
+import 'package:todo/persistence/models.dart';
 
 /*
   Reminder - This service only available in macOs, android, IOS
@@ -60,7 +60,7 @@ class TaskDao {
   Future<List<Task>> loadByDate(String date) async {
     var db = await databaseService.getDatabase();
     var tasks = await db
-        .query(tasksTableName, where: 'reminder_date = ?', whereArgs: [date]);
+        .query(tasksTableName, where: 'task_date = ?', whereArgs: [date]);
     return tasks.map((task) => Task.fromJson(task)).toList();
   }
 
@@ -70,7 +70,7 @@ class TaskDao {
   Future<List<Task>> loadByDateAndStatus(String date, int status) async {
     var db = await databaseService.getDatabase();
     var tasks = await db.query(tasksTableName,
-        where: 'reminder_date = ? AND completed = ?',
+        where: 'task_date = ? AND completed = ?',
         whereArgs: [date, status]);
     return tasks.map((task) => Task.fromJson(task)).toList();
   }
@@ -103,12 +103,11 @@ class TaskDao {
 class SQLiteDatabaseService {
   /* 
     Comments - 
-    FIXME : Change reminder_date type to INT as milliseconds
   */
 
   static const String dbName = "todos_database.db";
-  static const String createTableQueryV_0DELTA =
-      "CREATE TABLE ${TaskDao.tasksTableName} (id INTEGER PRIMARY KEY, task_desc VARCHAR, reminder_date TEXT, reminder_time TEXT, completed INTEGER(2))";
+  static const String createTableQueryV_0BETA =
+      "CREATE TABLE ${TaskDao.tasksTableName} (id INTEGER PRIMARY KEY, task_desc VARCHAR, task_date TEXT, start_time TEXT, end_time TEXT, completed INTEGER(2))";
   Database? _db;
   
   // Factory constructor that returns the singleton instance
@@ -127,7 +126,7 @@ class SQLiteDatabaseService {
   Future open() async {
     _db = await openDatabase(join(await getDatabasesPath(), dbName),
         onCreate: (db, version) {
-      return db.execute(createTableQueryV_0DELTA);
+      return db.execute(createTableQueryV_0BETA);
     }, version: 1);
   }
 
