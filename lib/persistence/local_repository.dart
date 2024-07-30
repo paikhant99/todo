@@ -47,17 +47,18 @@ class TaskDao {
     Comments - 
   */
 
-  Database db;
+  SQLiteDatabaseService databaseService;
   static const String tasksTableName = "tasks";
   static const String updateTaskCompleted =
       "UPDATE $tasksTableName SET completed = ? WHERE id = ?";
 
-  TaskDao({required this.db});
+  TaskDao({required this.databaseService});
 
   /*
     Retrieve All Tasks By Specified 'date' from 'tasks' Table
   */
   Future<List<Task>> loadByDate(String date) async {
+    var db = await databaseService.getDatabase();
     var tasks = await db
         .query(tasksTableName, where: 'reminder_date = ?', whereArgs: [date]);
     return tasks.map((task) => Task.fromJson(task)).toList();
@@ -67,6 +68,7 @@ class TaskDao {
     Retrieve Tasks By Specified 'date' and 'status' from 'tasks' Table
   */
   Future<List<Task>> loadByDateAndStatus(String date, int status) async {
+    var db = await databaseService.getDatabase();
     var tasks = await db.query(tasksTableName,
         where: 'reminder_date = ? AND completed = ?',
         whereArgs: [date, status]);
@@ -77,25 +79,28 @@ class TaskDao {
     Insert a new task to 'tasks' Table
   */
   Future<int> create(Task task) async {
+    var db = await databaseService.getDatabase();
     return await db.insert(tasksTableName, task.toJson());
   }
 
   /*
     Update completed value of specific 'id' in 'tasks' Table
   */
-  Future<int> updateCompleted(int id, int isCompleted) {
+  Future<int> updateCompleted(int id, int isCompleted) async{
+    var db = await databaseService.getDatabase();
     return db.rawUpdate(updateTaskCompleted, [isCompleted, id]);
   }
 
   /*
     Delete a specific task
   */
-  Future<int> delete(int id) {
+  Future<int> delete(int id) async{
+    var db = await databaseService.getDatabase();
     return db.delete(tasksTableName, where: "id = ?", whereArgs: [id]);
   }
 }
 
-class SQLiteDatabaseImpl {
+class SQLiteDatabaseService {
   /* 
     Comments - 
     FIXME : Change reminder_date type to INT as milliseconds
@@ -104,13 +109,23 @@ class SQLiteDatabaseImpl {
   static const String dbName = "todos_database.db";
   static const String createTableQueryV_0DELTA =
       "CREATE TABLE ${TaskDao.tasksTableName} (id INTEGER PRIMARY KEY, task_desc VARCHAR, reminder_date TEXT, reminder_time TEXT, completed INTEGER(2))";
+  Database? _db;
+  
+  // Factory constructor that returns the singleton instance
+  Future<Database> getDatabase() async{
+    if (_db == null){
+      await open();
+    }
+    return _db!;
+  }
+  
   /*
     Open a new database connection;
     If db does not exist, create a new db
     Else connect it.
   */
-  Future<Database> open() async {
-    return openDatabase(join(await getDatabasesPath(), dbName),
+  Future open() async {
+    _db = await openDatabase(join(await getDatabasesPath(), dbName),
         onCreate: (db, version) {
       return db.execute(createTableQueryV_0DELTA);
     }, version: 1);
@@ -119,7 +134,10 @@ class SQLiteDatabaseImpl {
   /*
     Close database connection
   */
-  void close(Database db) {
-    db.close();
+  Future close() async {
+    if (_db != null) {
+      await _db!.close();
+      _db = null;
+    }
   }
 }

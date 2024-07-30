@@ -1,11 +1,13 @@
+import 'dart:collection';
+
 import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:todo/models.dart';
-import 'package:todo/viewmodels.dart';
-import 'package:todo/views/notes_page.dart';
-import 'package:todo/views/uncompleted_tasks_home_page.dart';
+import 'package:todo/all_tasks_viewmodel.dart';
+import 'package:todo/views/all_tasks_page.dart';
+import 'package:todo/views/onprogress_tasks_page.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -19,7 +21,7 @@ class _HomeScreenState extends State<HomeScreen> {
     Comments - 
   */
   int currentPageIndex = 0;
-  static const List<Widget> _tabs = [UncompletedTasksHomePage(), NotesPage()];
+  static final UnmodifiableListView<Widget> _tabs = UnmodifiableListView([const OnProgressTasksPage(), const AllTasksPage()]);
 
   @override
   Widget build(BuildContext context) {
@@ -54,8 +56,8 @@ class _HomeScreenState extends State<HomeScreen> {
             },
             selectedIndex: currentPageIndex,
             destinations: const [
-              NavigationDestination(icon: Icon(Icons.task), label: "Tasks"),
-              NavigationDestination(icon: Icon(Icons.notes), label: "Notes")
+              NavigationDestination(icon: Icon(Icons.task), label: "Today's"),
+              NavigationDestination(icon: Icon(Icons.calendar_month), label: "Calendar's")
             ],
           ),
         ));
@@ -238,7 +240,7 @@ class _AddNewTaskBottomSheetState extends State<AddNewTaskBottomSheet> {
                     padding: const EdgeInsets.all(8.0),
                     child: ElevatedButton(
                         onPressed: () {
-                          Provider.of<UncompletedTasksHomePageViewModel>(
+                          Provider.of<AllTasksViewModel>(
                                   context,
                                   listen: false)
                               .addTask(
