@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:todo/constants.dart';
+import 'package:todo/views/view_constants.dart';
 import 'package:todo/controller/tasks_controller.dart';
-import 'package:todo/persistence/task.dart';
+import 'package:todo/data/entity/task.dart';
 
 class TaskItemCard extends StatefulWidget {
   /*
@@ -18,7 +18,7 @@ class TaskItemCard extends StatefulWidget {
 }
 
 class _TaskItemCardState extends State<TaskItemCard> {
-  final tasksController = Get.put(TasksController());
+  final tasksController = Get.find<TasksController>();
 
   @override
   Widget build(BuildContext context) {
@@ -39,8 +39,6 @@ class _TaskItemCardState extends State<TaskItemCard> {
                       child: const Text(CANCEL_BUTTON_LABEL)),
                   ElevatedButton(
                       onPressed: () {
-                        // Provider.of<AllTasksViewModel>(context, listen: false)
-                        //     .removeTask(task.taskId!, task.taskDate);
                         Navigator.of(context).pop();
                       },
                       child: const Text(CONFIRM_BUTTON_LABEL))
@@ -52,15 +50,12 @@ class _TaskItemCardState extends State<TaskItemCard> {
         child: CheckboxListTile(
           controlAffinity: ListTileControlAffinity.leading,
           title: Text(widget.task.taskName),
-          subtitle: Text(widget.task.goalName),
           value: widget.task.isCompleted,
           onChanged: (value) {
             setState(() {
               widget.task.isCompleted = value!;
             });
-            tasksController.updateTaskCheck(widget.task);
-            // Provider.of<AllTasksViewModel>(context, listen: false)
-            //     .toggleTask(task.taskId!, value!, task.taskDate);
+            // tasksController.updateTaskCheck(widget.task);
           },
         ),
       ),

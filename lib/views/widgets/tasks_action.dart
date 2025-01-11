@@ -2,7 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:todo/controller/tasks_controller.dart';
-import 'package:todo/persistence/task.dart';
+import 'package:todo/data/entity/task.dart';
 
 class TaskAction extends StatefulWidget {
   final String text;
@@ -20,7 +20,7 @@ class _TaskActionState extends State<TaskAction> {
     Comments - 
   */
   late final _EditingController controller;
-  final tasksController = Get.put(TasksController());
+  final tasksController = Get.find<TasksController>();
   final taskNameEdit = TextEditingController();
   final taskDescEdit = TextEditingController();
 

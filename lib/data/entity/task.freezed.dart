@@ -28,18 +28,10 @@ mixin _$Task {
   String get taskName => throw _privateConstructorUsedError;
   @JsonKey(name: "task_name")
   set taskName(String value) => throw _privateConstructorUsedError;
-  @JsonKey(name: "goal_name")
-  String get goalName => throw _privateConstructorUsedError;
-  @JsonKey(name: "goal_name")
-  set goalName(String value) => throw _privateConstructorUsedError;
   @JsonKey(name: "desc")
   String get description => throw _privateConstructorUsedError;
   @JsonKey(name: "desc")
   set description(String value) => throw _privateConstructorUsedError;
-  @JsonKey(name: "task_time")
-  String? get taskTime => throw _privateConstructorUsedError;
-  @JsonKey(name: "task_time")
-  set taskTime(String? value) => throw _privateConstructorUsedError;
   @JsonKey(name: "completed")
   bool get isCompleted => throw _privateConstructorUsedError;
   @JsonKey(name: "completed")
@@ -62,9 +54,7 @@ abstract class $TaskCopyWith<$Res> {
   $Res call(
       {@JsonKey(name: "id") int? taskId,
       @JsonKey(name: "task_name") String taskName,
-      @JsonKey(name: "goal_name") String goalName,
       @JsonKey(name: "desc") String description,
-      @JsonKey(name: "task_time") String? taskTime,
       @JsonKey(name: "completed") bool isCompleted});
 }
 
@@ -85,9 +75,7 @@ class _$TaskCopyWithImpl<$Res, $Val extends Task>
   $Res call({
     Object? taskId = freezed,
     Object? taskName = null,
-    Object? goalName = null,
     Object? description = null,
-    Object? taskTime = freezed,
     Object? isCompleted = null,
   }) {
     return _then(_value.copyWith(
@@ -99,18 +87,10 @@ class _$TaskCopyWithImpl<$Res, $Val extends Task>
           ? _value.taskName
           : taskName // ignore: cast_nullable_to_non_nullable
               as String,
-      goalName: null == goalName
-          ? _value.goalName
-          : goalName // ignore: cast_nullable_to_non_nullable
-              as String,
       description: null == description
           ? _value.description
           : description // ignore: cast_nullable_to_non_nullable
               as String,
-      taskTime: freezed == taskTime
-          ? _value.taskTime
-          : taskTime // ignore: cast_nullable_to_non_nullable
-              as String?,
       isCompleted: null == isCompleted
           ? _value.isCompleted
           : isCompleted // ignore: cast_nullable_to_non_nullable
@@ -129,9 +109,7 @@ abstract class _$$TaskImplCopyWith<$Res> implements $TaskCopyWith<$Res> {
   $Res call(
       {@JsonKey(name: "id") int? taskId,
       @JsonKey(name: "task_name") String taskName,
-      @JsonKey(name: "goal_name") String goalName,
       @JsonKey(name: "desc") String description,
-      @JsonKey(name: "task_time") String? taskTime,
       @JsonKey(name: "completed") bool isCompleted});
 }
 
@@ -149,9 +127,7 @@ class __$$TaskImplCopyWithImpl<$Res>
   $Res call({
     Object? taskId = freezed,
     Object? taskName = null,
-    Object? goalName = null,
     Object? description = null,
-    Object? taskTime = freezed,
     Object? isCompleted = null,
   }) {
     return _then(_$TaskImpl(
@@ -163,18 +139,10 @@ class __$$TaskImplCopyWithImpl<$Res>
           ? _value.taskName
           : taskName // ignore: cast_nullable_to_non_nullable
               as String,
-      goalName: null == goalName
-          ? _value.goalName
-          : goalName // ignore: cast_nullable_to_non_nullable
-              as String,
       description: null == description
           ? _value.description
           : description // ignore: cast_nullable_to_non_nullable
               as String,
-      taskTime: freezed == taskTime
-          ? _value.taskTime
-          : taskTime // ignore: cast_nullable_to_non_nullable
-              as String?,
       isCompleted: null == isCompleted
           ? _value.isCompleted
           : isCompleted // ignore: cast_nullable_to_non_nullable
@@ -189,9 +157,7 @@ class _$TaskImpl with DiagnosticableTreeMixin implements _Task {
   _$TaskImpl(
       {@JsonKey(name: "id") required this.taskId,
       @JsonKey(name: "task_name") required this.taskName,
-      @JsonKey(name: "goal_name") required this.goalName,
       @JsonKey(name: "desc") required this.description,
-      @JsonKey(name: "task_time") required this.taskTime,
       @JsonKey(name: "completed") this.isCompleted = false});
 
   factory _$TaskImpl.fromJson(Map<String, dynamic> json) =>
@@ -204,21 +170,15 @@ class _$TaskImpl with DiagnosticableTreeMixin implements _Task {
   @JsonKey(name: "task_name")
   String taskName;
   @override
-  @JsonKey(name: "goal_name")
-  String goalName;
-  @override
   @JsonKey(name: "desc")
   String description;
-  @override
-  @JsonKey(name: "task_time")
-  String? taskTime;
   @override
   @JsonKey(name: "completed")
   bool isCompleted;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'Task(taskId: $taskId, taskName: $taskName, goalName: $goalName, description: $description, taskTime: $taskTime, isCompleted: $isCompleted)';
+    return 'Task(taskId: $taskId, taskName: $taskName, description: $description, isCompleted: $isCompleted)';
   }
 
   @override
@@ -228,9 +188,7 @@ class _$TaskImpl with DiagnosticableTreeMixin implements _Task {
       ..add(DiagnosticsProperty('type', 'Task'))
       ..add(DiagnosticsProperty('taskId', taskId))
       ..add(DiagnosticsProperty('taskName', taskName))
-      ..add(DiagnosticsProperty('goalName', goalName))
       ..add(DiagnosticsProperty('description', description))
-      ..add(DiagnosticsProperty('taskTime', taskTime))
       ..add(DiagnosticsProperty('isCompleted', isCompleted));
   }
 
@@ -254,9 +212,7 @@ abstract class _Task implements Task {
   factory _Task(
       {@JsonKey(name: "id") required int? taskId,
       @JsonKey(name: "task_name") required String taskName,
-      @JsonKey(name: "goal_name") required String goalName,
       @JsonKey(name: "desc") required String description,
-      @JsonKey(name: "task_time") required String? taskTime,
       @JsonKey(name: "completed") bool isCompleted}) = _$TaskImpl;
 
   factory _Task.fromJson(Map<String, dynamic> json) = _$TaskImpl.fromJson;
@@ -272,20 +228,10 @@ abstract class _Task implements Task {
   @JsonKey(name: "task_name")
   set taskName(String value);
   @override
-  @JsonKey(name: "goal_name")
-  String get goalName;
-  @JsonKey(name: "goal_name")
-  set goalName(String value);
-  @override
   @JsonKey(name: "desc")
   String get description;
   @JsonKey(name: "desc")
   set description(String value);
-  @override
-  @JsonKey(name: "task_time")
-  String? get taskTime;
-  @JsonKey(name: "task_time")
-  set taskTime(String? value);
   @override
   @JsonKey(name: "completed")
   bool get isCompleted;

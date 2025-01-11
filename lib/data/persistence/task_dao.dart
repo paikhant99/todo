@@ -1,0 +1,65 @@
+import 'package:todo/data/data_constants.dart';
+import 'package:todo/data/entity/task.dart';
+import 'package:todo/data/persistence/db_service.dart';
+
+class TaskDao {
+  /*
+    Comments - 
+  */
+
+  late SQLiteDatabaseService databaseService;
+  // static const String updateTaskCompleted =
+  //     "UPDATE $tasksTableName SET completed = ? WHERE id = ?";
+
+  TaskDao({required this.databaseService});
+
+  // (Create) : Insert a new pop up task to 'tasks' table.
+  Future<int> create(Task task) async {
+    var db = await databaseService.getDatabase();
+    return await db.insert(tasksTableName, {
+      taskName : task.taskName,
+      taskDesc : task.description,
+      createdAt : databaseService.getCurrentTimestamp(),
+      modifiedAt : databaseService.getCurrentTimestamp()
+    });
+  }
+
+  // /*
+  //   Retrieve All Tasks By Specified 'date' from 'tasks' Table
+  // */
+  // Future<List<Task>> loadByDate(String date) async {
+  //   var db = await databaseService.getDatabase();
+  //   var tasks = await db
+  //       .query(tasksTableName, where: 'task_date = ?', whereArgs: [date]);
+  //   return tasks.map((task) => Task.fromJson(task)).toList();
+  // }
+
+  // /*
+  //   Retrieve Tasks By Specified 'date' and 'status' from 'tasks' Table
+  // */
+  // Future<List<Task>> loadByDateAndStatus(String date, int status) async {
+  //   var db = await databaseService.getDatabase();
+  //   var tasks = await db.query(tasksTableName,
+  //       where: 'task_date = ? AND completed = ?',
+  //       whereArgs: [date, status]);
+  //   return tasks.map((task) => Task.fromJson(task)).toList();
+  // }
+
+  
+
+  // /*
+  //   Update completed value of specific 'id' in 'tasks' Table
+  // */
+  // Future<int> updateCompleted(int id, int isCompleted) async{
+  //   var db = await databaseService.getDatabase();
+  //   return db.rawUpdate(updateTaskCompleted, [isCompleted, id]);
+  // }
+
+  // /*
+  //   Delete a specific task
+  // */
+  // Future<int> delete(int id) async{
+  //   var db = await databaseService.getDatabase();
+  //   return db.delete(tasksTableName, where: "id = ?", whereArgs: [id]);
+  // }
+}
