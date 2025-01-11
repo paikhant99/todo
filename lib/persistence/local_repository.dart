@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
-import 'package:todo/persistence/models.dart';
+import 'package:todo/persistence/task.dart';
 
 /*
   Reminder - This service only available in macOs, android, IOS

@@ -43,6 +43,10 @@ dependencies:
   provider: ^6.1.2
   expandable: ^5.0.1
   date_picker_timeline: ^1.2.6
+  get: ^4.6.6
+  flutter_easyloading: ^3.0.5
+  iconsax_plus: ^1.0.0
+  gap: ^3.0.1
 
 dev_dependencies:
   flutter_test:

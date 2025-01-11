@@ -1,46 +1,25 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:todo/constants.dart';
-import 'package:todo/persistence/local_repository.dart';
-import 'package:todo/all_tasks_viewmodel.dart';
-import 'package:todo/views/completed_all_tasks_screen.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:get/route_manager.dart';
 import 'package:todo/views/home_screen.dart';
 
+Locale locale = const Locale('en', 'GB');
+
 void main() async {
-  runApp(const TodoApp());
+  runApp(const Up2TaskApp());
 }
 
-class TodoApp extends StatelessWidget {
-  const TodoApp({super.key});
+class Up2TaskApp extends StatelessWidget {
+  const Up2TaskApp({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return MultiProvider(
-        providers: [
-          Provider<SQLiteDatabaseService>(
-            create: (_) => SQLiteDatabaseService()..open(),
-            dispose: (_, dbService) => dbService.close(),
-          ),
-          ProxyProvider<SQLiteDatabaseService, TaskDao>(
-            update: (_, dbService, __) => TaskDao(databaseService: dbService),
-          ),
-          ProxyProvider<TaskDao, LocalRepository>(
-            update: (_, taskDao, __) => LocalRepository(taskDao: taskDao),
-          ),
-          ChangeNotifierProxyProvider(
-              create: (context) => AllTasksViewModel(
-                  localRepo:
-                      Provider.of<LocalRepository>(context, listen: false)),
-              update: (_, localRep, allTasksViewModel) => allTasksViewModel!),
-        ],
-        child: MaterialApp(
-          initialRoute: '/',
-          routes: {
-            '/': (context) => const HomeScreen(),
-            '/completed_all_tasks': (context) =>
-                const CompletedAllTasksScreen(),
-          },
-          title: APP_TITLE,
-        ));
+    return GetMaterialApp(
+      locale: locale,
+      debugShowCheckedModeBanner: true,
+      home: const HomeScreen(),
+      builder: EasyLoading.init(),
+      title: 'Up2Task',
+    );
   }
 }

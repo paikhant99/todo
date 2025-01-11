@@ -4,68 +4,7 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:todo/all_tasks_viewmodel.dart';
 import 'package:todo/constants.dart';
-import 'package:todo/persistence/models.dart';
-
-class TaskItemTile extends StatelessWidget {
-  /*
-    Comments - 
-  */
-
-  final Task task;
-  late String _taskTimeRange;
-
-  TaskItemTile({super.key, required this.task});
-
-  @override
-  Widget build(BuildContext context) {
-    switch (task.taskStartTime) {
-      case _?:
-        _taskTimeRange = "${task.taskStartTime}";
-        if (task.taskEndTime != null){
-          _taskTimeRange = "${task.taskStartTime} - ${task.taskEndTime}";
-        }
-      default:
-        _taskTimeRange = '';
-    }
-
-    return GestureDetector(
-      onLongPress: () {
-        showDialog(
-            context: context,
-            builder: (context) {
-              return AlertDialog(
-                title: const Text(DELETE_CONFIRMATION_MSG),
-                content: Text(task.taskDesc),
-                actions: [
-                  TextButton(
-                      onPressed: () {
-                        Navigator.of(context).pop();
-                      },
-                      child: const Text(CANCEL_BUTTON_LABEL)),
-                  ElevatedButton(
-                      onPressed: () {
-                        Provider.of<AllTasksViewModel>(context, listen: false)
-                            .removeTask(task.taskId!, task.taskDate);
-                        Navigator.of(context).pop();
-                      },
-                      child: const Text(CONFIRM_BUTTON_LABEL))
-                ],
-              );
-            });
-      },
-      child: CheckboxListTile(
-        controlAffinity: ListTileControlAffinity.leading,
-        title: Text(task.taskDesc),
-        subtitle: Text(_taskTimeRange),
-        value: task.isCompleted == 1,
-        onChanged: (value) {
-          Provider.of<AllTasksViewModel>(context, listen: false)
-              .toggleTask(task.taskId!, value!, task.taskDate);
-        },
-      ),
-    );
-  }
-}
+import 'package:todo/persistence/task.dart';
 
 class CustomDatePicker extends StatefulWidget {
   const CustomDatePicker({super.key});

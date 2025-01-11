@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'models.dart';
+part of 'task.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
@@ -8,19 +8,19 @@ part of 'models.dart';
 
 _$TaskImpl _$$TaskImplFromJson(Map<String, dynamic> json) => _$TaskImpl(
       taskId: (json['id'] as num?)?.toInt(),
-      taskDesc: json['task_desc'] as String,
-      taskDate: json['task_date'] as String,
-      taskStartTime: json['start_time'] as String?,
-      taskEndTime: json['end_time'] as String?,
-      isCompleted: (json['completed'] as num).toInt(),
+      taskName: json['task_name'] as String,
+      goalName: json['goal_name'] as String,
+      description: json['desc'] as String,
+      taskTime: json['task_time'] as String?,
+      isCompleted: json['completed'] as bool? ?? false,
     );
 
 Map<String, dynamic> _$$TaskImplToJson(_$TaskImpl instance) =>
     <String, dynamic>{
       'id': instance.taskId,
-      'task_desc': instance.taskDesc,
-      'task_date': instance.taskDate,
-      'start_time': instance.taskStartTime,
-      'end_time': instance.taskEndTime,
+      'task_name': instance.taskName,
+      'goal_name': instance.goalName,
+      'desc': instance.description,
+      'task_time': instance.taskTime,
       'completed': instance.isCompleted,
     };
