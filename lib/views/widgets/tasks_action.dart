@@ -125,6 +125,7 @@ class _TaskActionState extends State<TaskAction> {
     final taskNameInput = Padding(
       padding: const EdgeInsets.all(8.0),
       child: TextField(
+        key: const Key('taskNameInput'),
         autofocus: true,
         controller: taskNameEdit,
         onChanged: (value) => controller.name.value = value,
@@ -136,6 +137,7 @@ class _TaskActionState extends State<TaskAction> {
     final descriptionInput = Padding(
       padding: const EdgeInsets.all(8.0),
       child: TextField(
+        key: const Key('taskDescriptionInput'),
         autofocus: true,
         controller: taskDescEdit,
         decoration:
@@ -148,6 +150,7 @@ class _TaskActionState extends State<TaskAction> {
         valueListenable: controller.canSubmit,
         builder: (context, canSubmit, _) {
           return ElevatedButton(
+            key: const Key('doneButton'),
               onPressed: canSubmit ? () => onPressed() : null,
               child: Text('Done'.tr));
         });

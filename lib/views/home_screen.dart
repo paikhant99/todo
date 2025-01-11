@@ -33,6 +33,7 @@ class _HomeScreenState extends State<HomeScreen> {
           children: _tabs,
         ),
         floatingActionButton: FloatingActionButton(
+          key: const Key('addFAB'),
           shape: const CircleBorder(),
           child: const Icon(Icons.add),
           onPressed: () {
