@@ -8,7 +8,7 @@ part 'task.g.dart';
 @unfreezed
 class Task with _$Task {
   factory Task(
-      {@JsonKey(name: "id") required int? taskId,
+      {@JsonKey(name: "id") @Default(null) int? taskId,
       @JsonKey(name: "task_name") required String taskName,
       @JsonKey(name: "desc") required String description,
       @JsonKey(name: "completed") @Default(false) bool isCompleted}) = _Task;

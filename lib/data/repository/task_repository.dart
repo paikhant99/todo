@@ -5,14 +5,14 @@
 import 'package:todo/data/entity/task.dart';
 import 'package:todo/data/persistence/task_dao.dart';
 
-class LocalRepository {
+class TaskRepository {
   /*
     Comments -
   */
 
   TaskDao taskDao;
 
-  LocalRepository({required this.taskDao});
+  TaskRepository({required this.taskDao});
 
   // (Create Task) : Create a new pop up task
   Future<int> createTask(Task task) {

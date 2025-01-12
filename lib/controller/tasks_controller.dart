@@ -1,6 +1,6 @@
 import 'package:get/get.dart';
 import 'package:todo/data/entity/task.dart';
-import 'package:todo/data/local_repository.dart';
+import 'package:todo/data/repository/task_repository.dart';
 
 class TasksController extends GetxController {
   final tasks = <Task>[].obs;
@@ -17,7 +17,7 @@ class TasksController extends GetxController {
         description: '')
   ];
 
-  final LocalRepository repo;
+  final TaskRepository repo;
 
   TasksController({required this.repo});
 
@@ -29,14 +29,13 @@ class TasksController extends GetxController {
   }
 
   // (Fetch Tasks) : Fetch all uncompleted tasks;
-  void fetchTasks(){
+  void fetchTasks() {
     tasks.assignAll(updatedTasks);
   }
 
   // (Add Task) : Add a new pop up task and fetch tasks after all.
   void addTask(String taskName, String description) {
     final taskCreate = Task(
-      taskId: 3,
       taskName: taskName,
       description: description,
     );

@@ -47,6 +47,7 @@ dependencies:
   flutter_easyloading: ^3.0.5
   iconsax_plus: ^1.0.0
   gap: ^3.0.1
+  sqflite_common_ffi: ^2.3.4+4
 
 dev_dependencies:
   integration_test:
@@ -54,6 +55,7 @@ dev_dependencies:
 
   flutter_test:
     sdk: flutter
+  mockito: ^5.0.17
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is

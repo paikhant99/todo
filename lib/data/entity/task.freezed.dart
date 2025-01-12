@@ -155,7 +155,7 @@ class __$$TaskImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$TaskImpl with DiagnosticableTreeMixin implements _Task {
   _$TaskImpl(
-      {@JsonKey(name: "id") required this.taskId,
+      {@JsonKey(name: "id") this.taskId = null,
       @JsonKey(name: "task_name") required this.taskName,
       @JsonKey(name: "desc") required this.description,
       @JsonKey(name: "completed") this.isCompleted = false});
@@ -210,7 +210,7 @@ class _$TaskImpl with DiagnosticableTreeMixin implements _Task {
 
 abstract class _Task implements Task {
   factory _Task(
-      {@JsonKey(name: "id") required int? taskId,
+      {@JsonKey(name: "id") int? taskId,
       @JsonKey(name: "task_name") required String taskName,
       @JsonKey(name: "desc") required String description,
       @JsonKey(name: "completed") bool isCompleted}) = _$TaskImpl;

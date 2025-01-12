@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:todo/controller/tasks_controller.dart';
-import 'package:todo/data/local_repository.dart';
+import 'package:todo/data/repository/task_repository.dart';
 import 'package:todo/data/persistence/db_service.dart';
 import 'package:todo/data/persistence/task_dao.dart';
 import 'package:todo/views/home_screen.dart';
@@ -11,7 +11,7 @@ Locale locale = const Locale('en', 'GB');
 
 void main() async {
   Get.put(TaskDao(databaseService: SQLiteDatabaseService()));
-  Get.put(LocalRepository(taskDao: Get.find()));
+  Get.put(TaskRepository(taskDao: Get.find()));
   Get.put(TasksController(repo: Get.find()));
 
   runApp(const Up2TaskApp());
