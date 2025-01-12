@@ -8,7 +8,7 @@ class TasksController extends GetxController {
     Task(
         taskId: 1,
         taskName: "Design Architecture",
-        isCompleted: false,
+        isCompleted: true,
         description: 'Include Image'),
     Task(
         taskId: 2,
