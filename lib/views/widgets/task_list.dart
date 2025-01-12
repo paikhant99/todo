@@ -6,7 +6,7 @@ import 'package:todo/views/widgets/task_item_card.dart';
 
 class TaskList extends StatefulWidget {
   final bool isCompleted;
-  TaskList({super.key, required this.isCompleted});
+  const TaskList({super.key, required this.isCompleted});
 
   @override
   State<TaskList> createState() => _TaskListState();
@@ -17,8 +17,6 @@ class _TaskListState extends State<TaskList> {
 
   @override
   Widget build(BuildContext context) {
-    // TODO: implement tasks list design
-
     return Padding(
       padding: const EdgeInsets.only(top: 50),
       child: Obx(
