@@ -8,8 +8,8 @@ class TasksController extends GetxController {
     Task(
         taskId: 1,
         taskName: "Design Architecture",
-        isCompleted: false,
-        description: ''),
+        isCompleted: true,
+        description: 'Include Image'),
     Task(
         taskId: 2,
         taskName: "Design Prototype",
@@ -30,7 +30,9 @@ class TasksController extends GetxController {
 
   // (Fetch Tasks) : Fetch all uncompleted tasks;
   void fetchTasks() {
-    tasks.assignAll(updatedTasks);
+    repo.loadAllTasks().then((taskValues){
+      tasks.assignAll(taskValues);
+    });
   }
 
   // (Add Task) : Add a new pop up task and fetch tasks after all.

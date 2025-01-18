@@ -19,6 +19,11 @@ class TaskRepository {
     return taskDao.create(task);
   }
 
+  // (Load Alll Tasks) Load all tasks
+  Future<List<Task>> loadAllTasks(){
+    return taskDao.readAllTasks();
+  }
+
   // Future<List<Task>> loadAllTasksByDate(String date) {
   //   return taskDao.loadByDate(date);
   // }

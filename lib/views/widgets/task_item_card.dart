@@ -1,14 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:gap/gap.dart';
 import 'package:get/get.dart';
-import 'package:todo/views/view_constants.dart';
+import 'package:iconsax_plus/iconsax_plus.dart';
 import 'package:todo/controller/tasks_controller.dart';
 import 'package:todo/data/entity/task.dart';
 
 class TaskItemCard extends StatefulWidget {
-  /*
-    Comments - 
-  */
-
   final Task task;
 
   const TaskItemCard({super.key, required this.task});
@@ -18,45 +15,61 @@ class TaskItemCard extends StatefulWidget {
 }
 
 class _TaskItemCardState extends State<TaskItemCard> {
+  /*
+    Comments - 
+  */
+
   final tasksController = Get.find<TasksController>();
 
+  // TODO: (On Tap - Event) : Appear Editing Task Action Screen
+  void _onTap() {}
+
+  // TODO: (On Long Press - Event) : Add Multi-select Action
+  void _onLongPress() {}
+
+  //TODO: Add (On changed - Event) : call updateTaskCheck from tasksController
+  void _onChanged(bool? value) {
+    setState(() {
+      widget.task.isCompleted = value!;
+    });
+  }
+
+  // (Build) : Build Task Item UI Card
   @override
   Widget build(BuildContext context) {
-
     return GestureDetector(
-      onLongPress: () {
-        showDialog(
-            context: context,
-            builder: (context) {
-              return AlertDialog(
-                title: const Text(DELETE_CONFIRMATION_MSG),
-                content: Text(widget.task.taskName),
-                actions: [
-                  TextButton(
-                      onPressed: () {
-                        Navigator.of(context).pop();
-                      },
-                      child: const Text(CANCEL_BUTTON_LABEL)),
-                  ElevatedButton(
-                      onPressed: () {
-                        Navigator.of(context).pop();
-                      },
-                      child: const Text(CONFIRM_BUTTON_LABEL))
-                ],
-              );
-            });
-      },
+      onTap: _onTap,
+      onLongPress: _onLongPress,
       child: Card(
-        child: CheckboxListTile(
-          controlAffinity: ListTileControlAffinity.leading,
-          title: Text(widget.task.taskName),
-          value: widget.task.isCompleted,
-          onChanged: (value) {
-            setState(() {
-              widget.task.isCompleted = value!;
-            });
-            // tasksController.updateTaskCheck(widget.task);
-          },
+        child: Padding(
+          padding: const EdgeInsets.all(12.0),
+          child: Row(
+            children: [
+              Checkbox(
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(15)),
+                  value: widget.task.isCompleted,
+                  onChanged: _onChanged),
+              const Gap(15),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    widget.task.taskName,
+                    style: context.textTheme.bodyLarge
+                        ?.copyWith(fontWeight: FontWeight.w400),
+                  ),
+                  Row(
+                    children: [
+                      widget.task.description.isNotEmpty
+                          ? const Icon(IconsaxPlusLinear.document_text)
+                          : const Offstage()
+                    ],
+                  )
+                ],
+              )
+            ],
+          ),
         ),
       ),
     );

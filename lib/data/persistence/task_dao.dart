@@ -24,6 +24,13 @@ class TaskDao {
     });
   }
 
+  // (Read All Tasks) : Read all tasks from 'tasks' table.
+  Future<List<Task>> readAllTasks() async{
+    var db = await databaseService.getDatabase();
+    var tasks = await db.query(tasksTableName);
+    return tasks.map((task) => Task(taskId: task[taskId] as int, taskName: task[taskName] as String, description: task[taskDesc] as String, isCompleted: (task[taskCompletedAt]) != null)).toList();
+  }
+
   // /*
   //   Retrieve All Tasks By Specified 'date' from 'tasks' Table
   // */

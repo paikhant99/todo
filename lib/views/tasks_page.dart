@@ -54,8 +54,8 @@ class _TasksPageState extends State<TasksPage>
                             }
                           ),
                           tabs: [
-                          Tab(text: 'progress'.tr),
-                          Tab(text: 'completed'.tr)
+                          Tab(key: const Key('progressTab'), text: 'progress'.tr),
+                          Tab(key: const Key('completedTab'), text: 'completed'.tr)
                         ]),
                       ),
                       floating: true,

@@ -24,7 +24,7 @@ void main() {
   });
 
   // (Test - Add New Pop up Task) : Test addTask method of TasksController
-  test('Add New Pop up Task', (){
+  test('Add New Pop up Task', () {
     var task = Task(
         taskName: 'Finish Flutter Project',
         description: 'Complete two steps first');
@@ -34,5 +34,25 @@ void main() {
     taskController.addTask(task.taskName, task.description);
 
     verify(mockTaskRepository.createTask(any));
+  });
+
+  // (Test - Display Backlog Tasks) : Test fetchTasks method of TasksController
+  test('Display Backlog Tasks', () {
+    var tasks = [
+      Task(
+          taskId: 1,
+          taskName: 'Finish Flutter Project 1',
+          description: 'Complete two steps first'),
+      Task(
+          taskId: 2,
+          taskName: 'Finish Flutter Project 2',
+          description: 'Complete three steps first')
+    ];
+
+    when(mockTaskRepository.loadAllTasks()).thenAnswer((_) async => tasks);
+
+    taskController.fetchTasks();
+
+    verify(mockTaskRepository.loadAllTasks());
   });
 }

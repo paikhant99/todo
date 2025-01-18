@@ -26,6 +26,7 @@ void main() {
     mockDbService = MockSQLiteDatabaseService();
     mockDb = MockDatabase();
     taskDao = TaskDao(databaseService: mockDbService);
+    when(mockDbService.getDatabase()).thenAnswer((_) async => mockDb);
   });
 
   // (Test - Add New Pop up Task) : Test create method of TaskDao
@@ -36,7 +37,6 @@ void main() {
         description: 'Complete two steps first');
 
     when(mockDbService.getCurrentTimestamp()).thenReturn("2025-01-11 12:10:00");
-    when(mockDbService.getDatabase()).thenAnswer((_) async => mockDb);
 
     when(mockDb.insert(
       tasksTableName,
@@ -48,5 +48,27 @@ void main() {
     var taskReturnId = await taskDao.create(task);
 
     expect(taskReturnId, task.taskId);
+  });
+
+  // (Test - Display Backlog Taks) : Test readAllTasks method of TaskDao
+  test('Display Backlog Tasks', () async {
+    var tasks = [
+      {
+        taskId: 1,
+        taskName: 'Finish Flutter Project 1',
+        taskDesc: 'Complete two steps first'
+      },
+      {
+        taskId: 1,
+        taskName: 'Finish Flutter Project 2',
+        taskDesc: 'Complete three steps first'
+      }
+    ];
+
+    when(mockDb.query(tasksTableName)).thenAnswer((_) async => tasks);
+
+    var tasksReturn = await taskDao.readAllTasks();
+
+    expect(tasksReturn.length, tasks.length);
   });
 }

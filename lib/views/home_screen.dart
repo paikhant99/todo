@@ -35,7 +35,7 @@ class _HomeScreenState extends State<HomeScreen> {
         floatingActionButton: FloatingActionButton(
           key: const Key('addFAB'),
           shape: const CircleBorder(),
-          child: const Icon(Icons.add),
+          child: const Icon(IconsaxPlusLinear.add),
           onPressed: () {
             showModalBottomSheet(
                 useSafeArea: true,

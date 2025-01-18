@@ -10,7 +10,9 @@ import 'package:todo/views/home_screen.dart';
 Locale locale = const Locale('en', 'GB');
 
 void main() async {
-  Get.put(TaskDao(databaseService: SQLiteDatabaseService()));
+
+  final dbService = SQLiteDatabaseService();
+  Get.put(TaskDao(databaseService: dbService));
   Get.put(TaskRepository(taskDao: Get.find()));
   Get.put(TasksController(repo: Get.find()));
 
