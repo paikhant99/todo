@@ -18,23 +18,42 @@ void main() {
   late TaskRepository taskRepository;
 
   // (Set Up) : Initialize mockTaskDao and taskRepository
-  setUp((){
+  setUp(() {
     mockTaskDao = MockTaskDao();
     taskRepository = TaskRepository(taskDao: mockTaskDao);
   });
 
   // (Test - Add New Pop up Task) : Test createTask method of taskRepository
-  test('Add New Pop up Task', ()async{
+  test('Add New Pop up Task', () async {
     var task = Task(
         taskId: 1,
         taskName: 'Finish Flutter Project',
         description: 'Complete two steps first');
 
     when(mockTaskDao.create(task)).thenAnswer((_) async => task.taskId!);
-        
+
     var taskReturnId = await taskRepository.createTask(task);
 
     expect(taskReturnId, task.taskId);
   });
 
+  // (Test - Display Backlog Tasks) : Test loadAllTasks method of taskRepository
+  test('Display Backlog Tasks', () async {
+    var tasks = [
+      Task(
+          taskId: 1,
+          taskName: 'Finish Flutter Project 1',
+          description: 'Complete two steps first'),
+      Task(
+          taskId: 2,
+          taskName: 'Finish Flutter Project 2',
+          description: 'Complete three steps first')
+    ];
+
+    when(mockTaskDao.readAllTasks()).thenAnswer((_) async => tasks);
+
+    var tasksReturn = await taskRepository.loadAllTasks();
+
+    expect(tasksReturn.length, tasks.length);
+  });
 }

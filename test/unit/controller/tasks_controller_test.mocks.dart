@@ -58,4 +58,12 @@ class MockTaskRepository extends _i1.Mock implements _i3.TaskRepository {
             returnValue: _i4.Future<int>.value(0),
           )
           as _i4.Future<int>);
+
+  @override
+  _i4.Future<List<_i5.Task>> loadAllTasks() =>
+      (super.noSuchMethod(
+            Invocation.method(#loadAllTasks, []),
+            returnValue: _i4.Future<List<_i5.Task>>.value(<_i5.Task>[]),
+          )
+          as _i4.Future<List<_i5.Task>>);
 }
