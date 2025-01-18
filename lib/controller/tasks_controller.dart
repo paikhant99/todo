@@ -30,7 +30,9 @@ class TasksController extends GetxController {
 
   // (Fetch Tasks) : Fetch all uncompleted tasks;
   void fetchTasks() {
-    tasks.assignAll(updatedTasks);
+    repo.loadAllTasks().then((taskValues){
+      tasks.assignAll(taskValues);
+    });
   }
 
   // (Add Task) : Add a new pop up task and fetch tasks after all.

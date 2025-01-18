@@ -42,7 +42,7 @@ class SQLiteDatabaseService {
   }
 
   // (On Create - Event) : Create tables and Add default values
-  Future<void> _onCreate(Database db, int version) async {
+  Future<void> _onCreate(Database db, int version) async{
     if (version >= 1) queriesV_1.forEach(db.execute);
   }
 
