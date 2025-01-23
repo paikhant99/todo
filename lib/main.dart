@@ -8,10 +8,9 @@ import 'package:todo/data/persistence/task_dao.dart';
 import 'package:todo/views/home_screen.dart';
 
 Locale locale = const Locale('en', 'GB');
+final dbService = SQLiteDatabaseService();
 
 void main() async {
-
-  final dbService = SQLiteDatabaseService();
   Get.put(TaskDao(databaseService: dbService));
   Get.put(TaskRepository(taskDao: Get.find()));
   Get.put(TasksController(repo: Get.find()));
@@ -19,8 +18,20 @@ void main() async {
   runApp(const Up2TaskApp());
 }
 
-class Up2TaskApp extends StatelessWidget {
+class Up2TaskApp extends StatefulWidget {
   const Up2TaskApp({super.key});
+
+  @override
+  State<Up2TaskApp> createState() => _Up2TaskAppState();
+}
+
+class _Up2TaskAppState extends State<Up2TaskApp> {
+
+  @override
+  void dispose() {
+    super.dispose();
+    dbService.close();
+  }
 
   @override
   Widget build(BuildContext context) {

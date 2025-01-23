@@ -7,8 +7,9 @@ import 'package:todo/data/entity/task.dart';
 
 class TaskItemCard extends StatefulWidget {
   final Task task;
+  final int index;
 
-  const TaskItemCard({super.key, required this.task});
+  const TaskItemCard({super.key, required this.task, required this.index});
 
   @override
   State<TaskItemCard> createState() => _TaskItemCardState();
@@ -46,6 +47,7 @@ class _TaskItemCardState extends State<TaskItemCard> {
           child: Row(
             children: [
               Checkbox(
+                  key: Key("completedCheckbox_${widget.index}"),
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(15)),
                   value: widget.task.isCompleted,

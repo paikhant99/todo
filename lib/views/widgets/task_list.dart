@@ -30,7 +30,7 @@ class _TaskListState extends State<TaskList> {
           return ListView.builder(
               itemCount: tasks.length,
               itemBuilder: (context, index) {
-                return TaskItemCard(task: tasks[index]);
+                return TaskItemCard(task: tasks[index], index: index);
               });
         },
       ),
