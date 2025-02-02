@@ -56,4 +56,36 @@ void main() {
 
     expect(tasksReturn.length, tasks.length);
   });
+
+  group('Mark Task as Completed or InProgress', () {
+    // (Test - Mark Task as Completed) : Test markTaskCheck method of taskRepository setting checked : true
+    test('Mark Task as Completed', () async {
+      var task = Task(
+          taskId: 1,
+          taskName: 'Finish Flutter Project',
+          description: 'Complete two steps first');
+
+      when(mockTaskDao.markCompleted(task.taskId)).thenAnswer((_) async => 1);
+
+      var noOfTasksChangedReturn =
+          await taskRepository.markTaskCheck(task.taskId!, true);
+
+      expect(noOfTasksChangedReturn, 1);
+    });
+
+    // (Test - Mark Task as In Progress) : Test markTaskCheck method of taskRepository setting checked : false
+    test('Mark Task as In Progress', () async {
+      var task = Task(
+          taskId: 1,
+          taskName: 'Finish Flutter Project',
+          description: 'Complete two steps first');
+
+      when(mockTaskDao.markInProgress(task.taskId)).thenAnswer((_) async => 1);
+
+      var noOfTasksChangedReturn =
+          await taskRepository.markTaskCheck(task.taskId!, false);
+
+      expect(noOfTasksChangedReturn, 1);
+    });
+  });
 }

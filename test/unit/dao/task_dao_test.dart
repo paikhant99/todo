@@ -71,4 +71,43 @@ void main() {
 
     expect(tasksReturn.length, tasks.length);
   });
+
+  group('Mark Task Completed or InProgress', () {
+
+    // (Test - Mark Task as Completed) : Test markCompleted method of TaskDao
+    test('Mark Task as Completed', () async {
+      var task = Task(
+          taskId: 1,
+          taskName: 'Finish Flutter Project',
+          description: 'Complete two steps first');
+      when(mockDbService.getCurrentTimestamp())
+          .thenReturn("2025-01-11 12:10:00");
+
+      when(mockDb.update(tasksTableName,
+          any,
+          where: '$taskId = ?',
+          whereArgs: [task.taskId])).thenAnswer((_) async => 1);
+
+      var noOfTasksChangedReturn = await taskDao.markCompleted(task.taskId!);
+
+      expect(noOfTasksChangedReturn, 1);
+    });
+
+    // (Test - Mark Task as InProgress) : Test markInProgress method of TaskDao
+    test('Mark Task as InProgress', () async {
+      var task = Task(
+          taskId: 1,
+          taskName: 'Finish Flutter Project',
+          description: 'Complete two steps first');
+
+      when(mockDb.update(tasksTableName,
+          {taskCompletedAt: null},
+          where: '$taskId = ?',
+          whereArgs: [task.taskId])).thenAnswer((_) async => 1);
+
+      var noOfTasksChangedReturn = await taskDao.markInProgress(task.taskId!);
+
+      expect(noOfTasksChangedReturn, 1);
+    });
+  });
 }

@@ -32,6 +32,7 @@ class _TaskItemCardState extends State<TaskItemCard> {
   void _onChanged(bool? value) {
     setState(() {
       widget.task.isCompleted = value!;
+      tasksController.updateTaskCheck(widget.task.taskId!, value);
     });
   }
 

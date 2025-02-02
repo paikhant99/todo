@@ -17,18 +17,40 @@ class TaskDao {
   Future<int> create(Task task) async {
     var db = await databaseService.getDatabase();
     return await db.insert(tasksTableName, {
-      taskName : task.taskName,
-      taskDesc : task.description,
-      createdAt : databaseService.getCurrentTimestamp(),
-      modifiedAt : databaseService.getCurrentTimestamp()
+      taskName: task.taskName,
+      taskDesc: task.description,
+      createdAt: databaseService.getCurrentTimestamp(),
+      modifiedAt: databaseService.getCurrentTimestamp()
     });
   }
 
   // (Read All Tasks) : Read all tasks from 'tasks' table.
-  Future<List<Task>> readAllTasks() async{
+  Future<List<Task>> readAllTasks() async {
     var db = await databaseService.getDatabase();
     var tasks = await db.query(tasksTableName);
-    return tasks.map((task) => Task(taskId: task[taskId] as int, taskName: task[taskName] as String, description: task[taskDesc] as String, isCompleted: (task[taskCompletedAt]) != null)).toList();
+    return tasks
+        .map((task) => Task(
+            taskId: task[taskId] as int,
+            taskName: task[taskName] as String,
+            description: task[taskDesc] as String,
+            isCompleted: (task[taskCompletedAt]) != null))
+        .toList();
+  }
+
+  // (Update Completed At) : Update completed at attribute with current timestamp
+  Future<int> markCompleted(int id) async {
+    var db = await databaseService.getDatabase();
+    return db.update(tasksTableName,
+        {taskCompletedAt: databaseService.getCurrentTimestamp()},
+        where: '$taskId = ?', whereArgs: [id]);
+  }
+
+  // (Update Completed At) : Update completed at attribute with current timestamp
+  Future<int> markInProgress(int id) async {
+    var db = await databaseService.getDatabase();
+    return db.update(tasksTableName,
+        {taskCompletedAt: null},
+        where: '$taskId = ?', whereArgs: [id]);
   }
 
   // /*
@@ -51,8 +73,6 @@ class TaskDao {
   //       whereArgs: [date, status]);
   //   return tasks.map((task) => Task.fromJson(task)).toList();
   // }
-
-  
 
   // /*
   //   Update completed value of specific 'id' in 'tasks' Table

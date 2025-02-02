@@ -71,4 +71,20 @@ class MockTaskDao extends _i1.Mock implements _i3.TaskDao {
             returnValue: _i4.Future<List<_i5.Task>>.value(<_i5.Task>[]),
           )
           as _i4.Future<List<_i5.Task>>);
+
+  @override
+  _i4.Future<int> markCompleted(int? id) =>
+      (super.noSuchMethod(
+            Invocation.method(#markCompleted, [id]),
+            returnValue: _i4.Future<int>.value(0),
+          )
+          as _i4.Future<int>);
+
+  @override
+  _i4.Future<int> markInProgress(int? id) =>
+      (super.noSuchMethod(
+            Invocation.method(#markInProgress, [id]),
+            returnValue: _i4.Future<int>.value(0),
+          )
+          as _i4.Future<int>);
 }

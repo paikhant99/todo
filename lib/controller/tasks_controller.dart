@@ -30,7 +30,7 @@ class TasksController extends GetxController {
 
   // (Fetch Tasks) : Fetch all uncompleted tasks;
   void fetchTasks() {
-    repo.loadAllTasks().then((taskValues){
+    repo.loadAllTasks().then((taskValues) {
       tasks.assignAll(taskValues);
     });
   }
@@ -45,8 +45,9 @@ class TasksController extends GetxController {
     fetchTasks();
   }
 
-  // void updateTaskCheck(Task task) {
-  //   tasks.removeWhere((t) => t.taskId == task.taskId);
-  //   tasks.add(task);
-  // }
+  // (Update Task Check) : Update Task Completion as completed or in_progress
+  void updateTaskCheck(int taskId, bool checked) {
+    repo.markTaskCheck(taskId, checked);
+    fetchTasks();
+  }
 }

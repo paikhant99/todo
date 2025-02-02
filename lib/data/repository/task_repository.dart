@@ -19,9 +19,16 @@ class TaskRepository {
     return taskDao.create(task);
   }
 
-  // (Load Alll Tasks) Load all tasks
-  Future<List<Task>> loadAllTasks(){
+  // (Load All Tasks) : Load all tasks
+  Future<List<Task>> loadAllTasks() {
     return taskDao.readAllTasks();
+  }
+
+  // (Mark Task Check) : Mark Task Completion as completed or in_progress
+  Future<int> markTaskCheck(int taskId, bool checked) {
+    return checked
+        ? taskDao.markCompleted(taskId)
+        : taskDao.markInProgress(taskId);
   }
 
   // Future<List<Task>> loadAllTasksByDate(String date) {
