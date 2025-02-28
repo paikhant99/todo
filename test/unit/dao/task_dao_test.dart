@@ -67,13 +67,12 @@ void main() {
 
     when(mockDb.query(tasksTableName)).thenAnswer((_) async => tasks);
 
-    var tasksReturn = await taskDao.readAllTasks();
+    var tasksReturn = await taskDao.readAllUnarchivedTasks();
 
     expect(tasksReturn.length, tasks.length);
   });
 
   group('Mark Task Completed or InProgress', () {
-
     // (Test - Mark Task as Completed) : Test markCompleted method of TaskDao
     test('Mark Task as Completed', () async {
       var task = Task(
@@ -83,8 +82,7 @@ void main() {
       when(mockDbService.getCurrentTimestamp())
           .thenReturn("2025-01-11 12:10:00");
 
-      when(mockDb.update(tasksTableName,
-          any,
+      when(mockDb.update(tasksTableName, any,
           where: '$taskId = ?',
           whereArgs: [task.taskId])).thenAnswer((_) async => 1);
 
@@ -100,14 +98,37 @@ void main() {
           taskName: 'Finish Flutter Project',
           description: 'Complete two steps first');
 
-      when(mockDb.update(tasksTableName,
-          {taskCompletedAt: null},
+      when(mockDb.update(tasksTableName, {taskCompletedAt: null},
           where: '$taskId = ?',
           whereArgs: [task.taskId])).thenAnswer((_) async => 1);
 
       var noOfTasksChangedReturn = await taskDao.markInProgress(task.taskId!);
 
       expect(noOfTasksChangedReturn, 1);
+    });
+
+    // (Test - Archive Tasks) : Test archiveTasks method of TaskDao
+    test('Archive Tasks', () async {
+      var taskIds = [1, 2, 3];
+      var task = Task(
+          taskId: 1,
+          taskName: 'Finish Flutter Project',
+          description: 'Complete two steps first');
+
+      when(mockDbService.getCurrentTimestamp())
+          .thenReturn("2025-01-11 12:10:00");
+
+      when(mockDb.update(
+        any,
+        any,
+        where: anyNamed('where'),
+        whereArgs: anyNamed('whereArgs'),
+        conflictAlgorithm: anyNamed('conflictAlgorithm'),
+      )).thenAnswer((_) async => 1);
+
+      var noOfTasksChangedReturn = await taskDao.archiveTasks(taskIds);
+
+      expect(noOfTasksChangedReturn.length, taskIds.length);
     });
   });
 }

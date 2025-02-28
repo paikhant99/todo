@@ -26,7 +26,6 @@ class Up2TaskApp extends StatefulWidget {
 }
 
 class _Up2TaskAppState extends State<Up2TaskApp> {
-
   @override
   void dispose() {
     super.dispose();

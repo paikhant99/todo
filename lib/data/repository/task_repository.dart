@@ -21,7 +21,7 @@ class TaskRepository {
 
   // (Load All Tasks) : Load all tasks
   Future<List<Task>> loadAllTasks() {
-    return taskDao.readAllTasks();
+    return taskDao.readAllUnarchivedTasks();
   }
 
   // (Mark Task Check) : Mark Task Completion as completed or in_progress
@@ -29,6 +29,11 @@ class TaskRepository {
     return checked
         ? taskDao.markCompleted(taskId)
         : taskDao.markInProgress(taskId);
+  }
+
+  // (Archive Tasks) : Archive tasks by setting archived_at attribute with current timestamp
+  Future<List<int>> archiveTasks(List<int> ids) {
+    return taskDao.archiveTasks(ids);
   }
 
   // Future<List<Task>> loadAllTasksByDate(String date) {

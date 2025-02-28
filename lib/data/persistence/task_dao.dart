@@ -24,10 +24,10 @@ class TaskDao {
     });
   }
 
-  // (Read All Tasks) : Read all tasks from 'tasks' table.
-  Future<List<Task>> readAllTasks() async {
+  // (Read All Unarchived Tasks) : Read all unarchived tasks from 'tasks' table.
+  Future<List<Task>> readAllUnarchivedTasks() async {
     var db = await databaseService.getDatabase();
-    var tasks = await db.query(tasksTableName);
+    var tasks = await db.query(tasksTableName, where: '$taskArchivedAt IS NULL');
     return tasks
         .map((task) => Task(
             taskId: task[taskId] as int,
@@ -51,6 +51,16 @@ class TaskDao {
     return db.update(tasksTableName,
         {taskCompletedAt: null},
         where: '$taskId = ?', whereArgs: [id]);
+  }
+
+  // (Archive Tasks) : Archive tasks by setting archived_at attribute with current timestamp
+  Future<List<int>> archiveTasks(List<int> ids) async {
+    var db = await databaseService.getDatabase();
+    return Future.wait(ids.map((id) async {
+      return db.update(tasksTableName,
+          {taskArchivedAt: databaseService.getCurrentTimestamp()},
+          where: '$taskId = ?', whereArgs: [id]);
+    }));
   }
 
   // /*

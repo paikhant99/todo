@@ -50,7 +50,7 @@ void main() {
           description: 'Complete three steps first')
     ];
 
-    when(mockTaskDao.readAllTasks()).thenAnswer((_) async => tasks);
+    when(mockTaskDao.readAllUnarchivedTasks()).thenAnswer((_) async => tasks);
 
     var tasksReturn = await taskRepository.loadAllTasks();
 
@@ -86,6 +86,18 @@ void main() {
           await taskRepository.markTaskCheck(task.taskId!, false);
 
       expect(noOfTasksChangedReturn, 1);
+    });
+
+    // (Test - Archive Tasks) : Test archiveTasks method of taskRepository
+    test('Archive Tasks', () async {
+      var taskIds = [1, 2, 3];
+
+      when(mockTaskDao.archiveTasks(taskIds))
+          .thenAnswer((_) async => [1, 1, 1]);
+
+      var noOfTasksChangedReturn = await taskRepository.archiveTasks(taskIds);
+
+      expect(noOfTasksChangedReturn.length, taskIds.length);
     });
   });
 }

@@ -1,4 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
+import 'package:get/get.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 import 'package:todo/controller/tasks_controller.dart';
@@ -111,6 +112,29 @@ void main() {
       taskController.updateTaskCheck(task.taskId!, false);
 
       verify(mockTaskRepository.markTaskCheck(task.taskId!, false));
+    });
+
+    // (Test - Archive Tasks) : Test archiveTasks method of TasksController
+    test('Archive Tasks', () async {
+      var selectedTasks = [
+        Task(
+            taskId: 1,
+            taskName: 'Finish Flutter Project 1',
+            description: 'Complete two steps first'),
+        Task(
+            taskId: 2,
+            taskName: 'Finish Flutter Project 2',
+            description: 'Complete three steps first')
+      ].obs;
+      taskController.selectedTasks.addAll(selectedTasks);
+      when(mockTaskRepository.archiveTasks(any)).thenAnswer((_) async =>
+          Future.value(selectedTasks.map((task) => task.taskId!).toList()));
+      when(mockTaskRepository.loadAllTasks())
+          .thenAnswer((_) async => selectedTasks);
+
+      taskController.archiveTasks();
+
+      verify(mockTaskRepository.archiveTasks([1, 2])).called(1);
     });
   });
 }

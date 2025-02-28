@@ -4,18 +4,8 @@ import 'package:todo/data/repository/task_repository.dart';
 
 class TasksController extends GetxController {
   final tasks = <Task>[].obs;
-  final updatedTasks = [
-    Task(
-        taskId: 1,
-        taskName: "Design Architecture",
-        isCompleted: true,
-        description: 'Include Image'),
-    Task(
-        taskId: 2,
-        taskName: "Design Prototype",
-        isCompleted: false,
-        description: '')
-  ];
+  final isMultipleSelected = false.obs;
+  final selectedTasks = <Task>[].obs;
 
   final TaskRepository repo;
 
@@ -49,5 +39,37 @@ class TasksController extends GetxController {
   void updateTaskCheck(int taskId, bool checked) {
     repo.markTaskCheck(taskId, checked);
     fetchTasks();
+  }
+
+  // (Do Multiple Selection) : Select multiple tasks for batch operations
+  void doMultipleSelection(Task task) {
+    if (isMultipleSelected.isTrue) {
+      if (selectedTasks.contains(task)) {
+        selectedTasks.remove(task);
+      } else {
+        selectedTasks.add(task);
+      }
+      print("Task: $selectedTasks");
+
+      if (selectedTasks.isEmpty) {
+        isMultipleSelected.value = false;
+      }
+    }
+  }
+
+  // (Clear Multiple Selection) : Clear all selected tasks
+  void clearMultipleSelection() {
+    selectedTasks.clear();
+    isMultipleSelected.value = false;
+  }
+
+  // (Archive Tasks) : Archive tasks by setting archived_at attribute with current timestamp
+  void archiveTasks() {
+    final ids = selectedTasks.map((task) => task.taskId!).toList();
+    repo.archiveTasks(ids).then((value) {
+      fetchTasks();
+      clearMultipleSelection();
+    });
+    
   }
 }

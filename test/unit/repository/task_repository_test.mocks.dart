@@ -65,9 +65,9 @@ class MockTaskDao extends _i1.Mock implements _i3.TaskDao {
           as _i4.Future<int>);
 
   @override
-  _i4.Future<List<_i5.Task>> readAllTasks() =>
+  _i4.Future<List<_i5.Task>> readAllUnarchivedTasks() =>
       (super.noSuchMethod(
-            Invocation.method(#readAllTasks, []),
+            Invocation.method(#readAllUnarchivedTasks, []),
             returnValue: _i4.Future<List<_i5.Task>>.value(<_i5.Task>[]),
           )
           as _i4.Future<List<_i5.Task>>);
@@ -87,4 +87,12 @@ class MockTaskDao extends _i1.Mock implements _i3.TaskDao {
             returnValue: _i4.Future<int>.value(0),
           )
           as _i4.Future<int>);
+
+  @override
+  _i4.Future<List<int>> archiveTasks(List<int>? ids) =>
+      (super.noSuchMethod(
+            Invocation.method(#archiveTasks, [ids]),
+            returnValue: _i4.Future<List<int>>.value(<int>[]),
+          )
+          as _i4.Future<List<int>>);
 }
