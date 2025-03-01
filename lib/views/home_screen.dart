@@ -21,8 +21,12 @@ class _HomeScreenState extends State<HomeScreen> {
   // TODO : Change Home Screen design
 
   int pageIndex = 0;
-  static final UnmodifiableListView<Widget> _tabs = UnmodifiableListView(
-      [const TasksPage(), const GoalsPage()]);
+  static final UnmodifiableListView<Widget> _tabs = UnmodifiableListView([
+    const TasksPage(
+      title: "Backlog",
+    ),
+    const GoalsPage()
+  ]);
 
   @override
   Widget build(BuildContext context) {
@@ -62,6 +66,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   icon: Icon(IconsaxPlusLinear.task_square),
                   label: "Backlog"),
               NavigationDestination(
+                  key: Key('goalsNavTab'),
                   selectedIcon: Icon(IconsaxPlusBold.folder),
                   icon: Icon(IconsaxPlusLinear.folder),
                   label: "Goals"),

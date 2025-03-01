@@ -6,7 +6,8 @@ import 'package:todo/views/widgets/my_delegate.dart';
 import 'package:todo/views/widgets/task_list.dart';
 
 class TasksPage extends StatefulWidget {
-  const TasksPage({super.key});
+  final String title;
+  const TasksPage({super.key, required this.title});
 
   @override
   State<TasksPage> createState() => _TasksPageState();
@@ -38,7 +39,7 @@ class _TasksPageState extends State<TasksPage>
                   )
                 : null,
             title: Text(
-              'Backlog'.tr,
+              widget.title.tr,
               style: context.textTheme.titleLarge
                   ?.copyWith(fontWeight: FontWeight.w600),
             ),
