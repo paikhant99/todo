@@ -9,11 +9,11 @@ class GoalItemCard extends StatelessWidget {
   final Function()? onTap;
 
   const GoalItemCard({
-    Key? key,
+    super.key,
     required this.goal,
     required this.percent,
     this.onTap,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -26,12 +26,15 @@ class GoalItemCard extends StatelessWidget {
             title: Text(goal.goalName,
                 style: context.textTheme.bodyMedium
                     ?.copyWith(fontWeight: FontWeight.w700)),
-            subtitle: Text('2 out of ${goal.tasks.length} Tasks Completed'),
+            subtitle: Text(
+                '${goal.completedTasksCount} out of ${goal.allTasksCount} Tasks Completed'),
             leading: SizedBox(
               width: 64,
               height: 64,
               child: SleekCircularSlider(
                 appearance: CircularSliderAppearance(
+                  angleRange: 360,
+                  startAngle: 180,
                   customWidths: CustomSliderWidths(
                       progressBarWidth: 5,
                       trackWidth: 5,
@@ -53,7 +56,7 @@ class GoalItemCard extends StatelessWidget {
                 ),
                 min: 0,
                 max: 100,
-                initialValue: 25,
+                initialValue: goal.allTasksCount == 0 ? 0 : percent * 100,
               ),
             ),
             onTap: onTap,

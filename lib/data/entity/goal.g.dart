@@ -9,15 +9,14 @@ part of 'goal.dart';
 _$GoalImpl _$$GoalImplFromJson(Map<String, dynamic> json) => _$GoalImpl(
       goalId: (json['id'] as num?)?.toInt() ?? null,
       goalName: json['goal_name'] as String,
-      tasks: (json['tasks'] as List<dynamic>?)
-              ?.map((e) => Task.fromJson(e as Map<String, dynamic>))
-              .toList() ??
-          const [],
+      allTasksCount: (json['all_tasks_count'] as num).toInt(),
+      completedTasksCount: (json['completed_tasks_count'] as num).toInt(),
     );
 
 Map<String, dynamic> _$$GoalImplToJson(_$GoalImpl instance) =>
     <String, dynamic>{
       'id': instance.goalId,
       'goal_name': instance.goalName,
-      'tasks': instance.tasks,
+      'all_tasks_count': instance.allTasksCount,
+      'completed_tasks_count': instance.completedTasksCount,
     };

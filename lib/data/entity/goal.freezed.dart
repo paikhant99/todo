@@ -28,10 +28,14 @@ mixin _$Goal {
   String get goalName => throw _privateConstructorUsedError;
   @JsonKey(name: "goal_name")
   set goalName(String value) => throw _privateConstructorUsedError;
-  @JsonKey(name: "tasks")
-  List<Task> get tasks => throw _privateConstructorUsedError;
-  @JsonKey(name: "tasks")
-  set tasks(List<Task> value) => throw _privateConstructorUsedError;
+  @JsonKey(name: "all_tasks_count")
+  int get allTasksCount => throw _privateConstructorUsedError;
+  @JsonKey(name: "all_tasks_count")
+  set allTasksCount(int value) => throw _privateConstructorUsedError;
+  @JsonKey(name: "completed_tasks_count")
+  int get completedTasksCount => throw _privateConstructorUsedError;
+  @JsonKey(name: "completed_tasks_count")
+  set completedTasksCount(int value) => throw _privateConstructorUsedError;
 
   /// Serializes this Goal to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -50,7 +54,8 @@ abstract class $GoalCopyWith<$Res> {
   $Res call(
       {@JsonKey(name: "id") int? goalId,
       @JsonKey(name: "goal_name") String goalName,
-      @JsonKey(name: "tasks") List<Task> tasks});
+      @JsonKey(name: "all_tasks_count") int allTasksCount,
+      @JsonKey(name: "completed_tasks_count") int completedTasksCount});
 }
 
 /// @nodoc
@@ -70,7 +75,8 @@ class _$GoalCopyWithImpl<$Res, $Val extends Goal>
   $Res call({
     Object? goalId = freezed,
     Object? goalName = null,
-    Object? tasks = null,
+    Object? allTasksCount = null,
+    Object? completedTasksCount = null,
   }) {
     return _then(_value.copyWith(
       goalId: freezed == goalId
@@ -81,10 +87,14 @@ class _$GoalCopyWithImpl<$Res, $Val extends Goal>
           ? _value.goalName
           : goalName // ignore: cast_nullable_to_non_nullable
               as String,
-      tasks: null == tasks
-          ? _value.tasks
-          : tasks // ignore: cast_nullable_to_non_nullable
-              as List<Task>,
+      allTasksCount: null == allTasksCount
+          ? _value.allTasksCount
+          : allTasksCount // ignore: cast_nullable_to_non_nullable
+              as int,
+      completedTasksCount: null == completedTasksCount
+          ? _value.completedTasksCount
+          : completedTasksCount // ignore: cast_nullable_to_non_nullable
+              as int,
     ) as $Val);
   }
 }
@@ -99,7 +109,8 @@ abstract class _$$GoalImplCopyWith<$Res> implements $GoalCopyWith<$Res> {
   $Res call(
       {@JsonKey(name: "id") int? goalId,
       @JsonKey(name: "goal_name") String goalName,
-      @JsonKey(name: "tasks") List<Task> tasks});
+      @JsonKey(name: "all_tasks_count") int allTasksCount,
+      @JsonKey(name: "completed_tasks_count") int completedTasksCount});
 }
 
 /// @nodoc
@@ -116,7 +127,8 @@ class __$$GoalImplCopyWithImpl<$Res>
   $Res call({
     Object? goalId = freezed,
     Object? goalName = null,
-    Object? tasks = null,
+    Object? allTasksCount = null,
+    Object? completedTasksCount = null,
   }) {
     return _then(_$GoalImpl(
       goalId: freezed == goalId
@@ -127,10 +139,14 @@ class __$$GoalImplCopyWithImpl<$Res>
           ? _value.goalName
           : goalName // ignore: cast_nullable_to_non_nullable
               as String,
-      tasks: null == tasks
-          ? _value.tasks
-          : tasks // ignore: cast_nullable_to_non_nullable
-              as List<Task>,
+      allTasksCount: null == allTasksCount
+          ? _value.allTasksCount
+          : allTasksCount // ignore: cast_nullable_to_non_nullable
+              as int,
+      completedTasksCount: null == completedTasksCount
+          ? _value.completedTasksCount
+          : completedTasksCount // ignore: cast_nullable_to_non_nullable
+              as int,
     ));
   }
 }
@@ -141,7 +157,9 @@ class _$GoalImpl implements _Goal {
   _$GoalImpl(
       {@JsonKey(name: "id") this.goalId = null,
       @JsonKey(name: "goal_name") required this.goalName,
-      @JsonKey(name: "tasks") this.tasks = const []});
+      @JsonKey(name: "all_tasks_count") required this.allTasksCount,
+      @JsonKey(name: "completed_tasks_count")
+      required this.completedTasksCount});
 
   factory _$GoalImpl.fromJson(Map<String, dynamic> json) =>
       _$$GoalImplFromJson(json);
@@ -153,12 +171,15 @@ class _$GoalImpl implements _Goal {
   @JsonKey(name: "goal_name")
   String goalName;
   @override
-  @JsonKey(name: "tasks")
-  List<Task> tasks;
+  @JsonKey(name: "all_tasks_count")
+  int allTasksCount;
+  @override
+  @JsonKey(name: "completed_tasks_count")
+  int completedTasksCount;
 
   @override
   String toString() {
-    return 'Goal(goalId: $goalId, goalName: $goalName, tasks: $tasks)';
+    return 'Goal(goalId: $goalId, goalName: $goalName, allTasksCount: $allTasksCount, completedTasksCount: $completedTasksCount)';
   }
 
   /// Create a copy of Goal
@@ -181,7 +202,9 @@ abstract class _Goal implements Goal {
   factory _Goal(
       {@JsonKey(name: "id") int? goalId,
       @JsonKey(name: "goal_name") required String goalName,
-      @JsonKey(name: "tasks") List<Task> tasks}) = _$GoalImpl;
+      @JsonKey(name: "all_tasks_count") required int allTasksCount,
+      @JsonKey(name: "completed_tasks_count")
+      required int completedTasksCount}) = _$GoalImpl;
 
   factory _Goal.fromJson(Map<String, dynamic> json) = _$GoalImpl.fromJson;
 
@@ -196,10 +219,15 @@ abstract class _Goal implements Goal {
   @JsonKey(name: "goal_name")
   set goalName(String value);
   @override
-  @JsonKey(name: "tasks")
-  List<Task> get tasks;
-  @JsonKey(name: "tasks")
-  set tasks(List<Task> value);
+  @JsonKey(name: "all_tasks_count")
+  int get allTasksCount;
+  @JsonKey(name: "all_tasks_count")
+  set allTasksCount(int value);
+  @override
+  @JsonKey(name: "completed_tasks_count")
+  int get completedTasksCount;
+  @JsonKey(name: "completed_tasks_count")
+  set completedTasksCount(int value);
 
   /// Create a copy of Goal
   /// with the given fields replaced by the non-null parameter values.

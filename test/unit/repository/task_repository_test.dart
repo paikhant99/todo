@@ -50,9 +50,9 @@ void main() {
           description: 'Complete three steps first')
     ];
 
-    when(mockTaskDao.readAllUnarchivedTasks()).thenAnswer((_) async => tasks);
+    when(mockTaskDao.readAllUnarchivedTasksByGoal(1)).thenAnswer((_) async => tasks);
 
-    var tasksReturn = await taskRepository.loadAllTasks();
+    var tasksReturn = await taskRepository.loadAllTasksByGoal(1);
 
     expect(tasksReturn.length, tasks.length);
   });

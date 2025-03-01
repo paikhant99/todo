@@ -34,7 +34,6 @@ class _TaskListState extends State<TaskList> {
                   task: task,
                   index: tasks.indexOf(task),
                   onTap: () {
-                    // tasksController.isMultipleSelected.value = true;
                     tasksController.doMultipleSelection(task);
                   },
                   onLongPress: () {

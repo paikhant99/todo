@@ -11,16 +11,9 @@ class TasksController extends GetxController {
 
   TasksController({required this.repo});
 
-  // (On Init - Event) : Initialize all states in controller.
-  @override
-  void onInit() {
-    super.onInit();
-    fetchTasks();
-  }
-
   // (Fetch Tasks) : Fetch all uncompleted tasks;
-  void fetchTasks() {
-    repo.loadAllTasks().then((taskValues) {
+  void fetchTasks({int goalId = 1}) {
+    repo.loadAllTasksByGoal(goalId).then((taskValues) {
       tasks.assignAll(taskValues);
     });
   }
@@ -49,7 +42,6 @@ class TasksController extends GetxController {
       } else {
         selectedTasks.add(task);
       }
-      print("Task: $selectedTasks");
 
       if (selectedTasks.isEmpty) {
         isMultipleSelected.value = false;

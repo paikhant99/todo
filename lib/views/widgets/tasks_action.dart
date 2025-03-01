@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:todo/controller/goals_controller.dart';
 import 'package:todo/controller/tasks_controller.dart';
 import 'package:todo/data/entity/task.dart';
 
@@ -21,6 +22,7 @@ class _TaskActionState extends State<TaskAction> {
   */
   late final _EditingController controller;
   final tasksController = Get.find<TasksController>();
+  final goalsController = Get.find<GoalsController>();
   final taskNameEdit = TextEditingController();
   final taskDescEdit = TextEditingController();
 

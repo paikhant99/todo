@@ -22,9 +22,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   int pageIndex = 0;
   static final UnmodifiableListView<Widget> _tabs = UnmodifiableListView([
-    const TasksPage(
-      title: "Backlog",
-    ),
+    const TasksPage(),
     const GoalsPage()
   ]);
 
