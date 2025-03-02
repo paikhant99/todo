@@ -34,7 +34,6 @@ class _TaskListState extends State<TaskList> {
                   task: task,
                   index: tasks.indexOf(task),
                   onTap: () {
-                    // tasksController.isMultipleSelected.value = true;
                     tasksController.doMultipleSelection(task);
                   },
                   onLongPress: () {
@@ -45,23 +44,6 @@ class _TaskListState extends State<TaskList> {
               })
             ],
           );
-
-          // return ListView.builder(
-          //     itemCount: tasks.length,
-          //     itemBuilder: (context, index) {
-          //       return TaskItemCard(
-          //         task: tasks[index],
-          //         index: index,
-          //         onTap: () {
-          //           tasksController.isMultipleSelected.value = true;
-          //           tasksController.doMultipleSelection(tasks[index]);
-          //         },
-          //         onLongPress: () {
-          //           tasksController.isMultipleSelected.value = true;
-          //           tasksController.doMultipleSelection(tasks[index]);
-          //         },
-          //       );
-          //     });
         },
       ),
     );

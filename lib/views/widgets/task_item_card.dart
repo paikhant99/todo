@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 import 'package:iconsax_plus/iconsax_plus.dart';
+import 'package:todo/controller/goals_controller.dart';
 import 'package:todo/controller/tasks_controller.dart';
 import 'package:todo/data/entity/task.dart';
 
@@ -28,12 +29,14 @@ class _TaskItemCardState extends State<TaskItemCard> {
   */
 
   final tasksController = Get.find<TasksController>();
+  final goalsController = Get.find<GoalsController>();
 
   //TODO: Add (On changed - Event) : call updateTaskCheck from tasksController
   void _onChanged(bool? value) {
     setState(() {
       widget.task.isCompleted = value!;
       tasksController.updateTaskCheck(widget.task.taskId!, value);
+      goalsController.fetchGoals();
     });
   }
 

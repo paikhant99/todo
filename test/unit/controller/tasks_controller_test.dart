@@ -37,8 +37,8 @@ void main() {
     verify(mockTaskRepository.createTask(any));
   });
 
-  // (Test - Display Backlog Tasks) : Test fetchTasks method of TasksController
-  test('Display Backlog Tasks', () {
+  // (Test - Display Backlog Tasks by Goal) : Test fetchTasks method of TasksController
+  test('Display Backlog Tasks by Goal', () {
     var tasks = [
       Task(
           taskId: 1,
@@ -50,11 +50,11 @@ void main() {
           description: 'Complete three steps first')
     ];
 
-    when(mockTaskRepository.loadAllTasks()).thenAnswer((_) async => tasks);
+    when(mockTaskRepository.loadAllTasksByGoal(1)).thenAnswer((_) async => tasks);
 
-    taskController.fetchTasks();
+    taskController.fetchTasks(goalId: 1);
 
-    verify(mockTaskRepository.loadAllTasks());
+    verify(mockTaskRepository.loadAllTasksByGoal(1));
   });
 
   group('Mark Task as Completed or InProgress', () {
@@ -76,7 +76,7 @@ void main() {
             description: 'Complete three steps first')
       ];
 
-      when(mockTaskRepository.loadAllTasks()).thenAnswer((_) async => tasks);
+      when(mockTaskRepository.loadAllTasksByGoal(1)).thenAnswer((_) async => tasks);
 
       when(mockTaskRepository.markTaskCheck(task.taskId, true))
           .thenAnswer((_) async => 1);
@@ -104,7 +104,7 @@ void main() {
             description: 'Complete three steps first')
       ];
 
-      when(mockTaskRepository.loadAllTasks()).thenAnswer((_) async => tasks);
+      when(mockTaskRepository.loadAllTasksByGoal(1)).thenAnswer((_) async => tasks);
 
       when(mockTaskRepository.markTaskCheck(task.taskId, false))
           .thenAnswer((_) async => 1);
@@ -129,7 +129,7 @@ void main() {
       taskController.selectedTasks.addAll(selectedTasks);
       when(mockTaskRepository.archiveTasks(any)).thenAnswer((_) async =>
           Future.value(selectedTasks.map((task) => task.taskId!).toList()));
-      when(mockTaskRepository.loadAllTasks())
+      when(mockTaskRepository.loadAllTasksByGoal(1))
           .thenAnswer((_) async => selectedTasks);
 
       taskController.archiveTasks();

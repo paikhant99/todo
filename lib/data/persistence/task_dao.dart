@@ -8,8 +8,6 @@ class TaskDao {
   */
 
   late SQLiteDatabaseService databaseService;
-  // static const String updateTaskCompleted =
-  //     "UPDATE $tasksTableName SET completed = ? WHERE id = ?";
 
   TaskDao({required this.databaseService});
 
@@ -24,10 +22,11 @@ class TaskDao {
     });
   }
 
-  // (Read All Unarchived Tasks) : Read all unarchived tasks from 'tasks' table.
-  Future<List<Task>> readAllUnarchivedTasks() async {
+  // (Read All Unarchived Tasks By Goal) : Read all unarchived tasks by goal from 'tasks' table.
+  Future<List<Task>> readAllUnarchivedTasksByGoal(int goalId) async {
     var db = await databaseService.getDatabase();
-    var tasks = await db.query(tasksTableName, where: '$taskArchivedAt IS NULL');
+    var tasks =
+        await db.query(tasksTableName, where: '$taskArchivedAt IS NULL AND $taskGoalId = ?', whereArgs: [goalId]);
     return tasks
         .map((task) => Task(
             taskId: task[taskId] as int,
@@ -48,8 +47,7 @@ class TaskDao {
   // (Update Completed At) : Update completed at attribute with current timestamp
   Future<int> markInProgress(int id) async {
     var db = await databaseService.getDatabase();
-    return db.update(tasksTableName,
-        {taskCompletedAt: null},
+    return db.update(tasksTableName, {taskCompletedAt: null},
         where: '$taskId = ?', whereArgs: [id]);
   }
 
@@ -84,19 +82,4 @@ class TaskDao {
   //   return tasks.map((task) => Task.fromJson(task)).toList();
   // }
 
-  // /*
-  //   Update completed value of specific 'id' in 'tasks' Table
-  // */
-  // Future<int> updateCompleted(int id, int isCompleted) async{
-  //   var db = await databaseService.getDatabase();
-  //   return db.rawUpdate(updateTaskCompleted, [isCompleted, id]);
-  // }
-
-  // /*
-  //   Delete a specific task
-  // */
-  // Future<int> delete(int id) async{
-  //   var db = await databaseService.getDatabase();
-  //   return db.delete(tasksTableName, where: "id = ?", whereArgs: [id]);
-  // }
 }

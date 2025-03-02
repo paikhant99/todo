@@ -67,7 +67,7 @@ void main() {
 
     when(mockDb.query(tasksTableName)).thenAnswer((_) async => tasks);
 
-    var tasksReturn = await taskDao.readAllUnarchivedTasks();
+    var tasksReturn = await taskDao.readAllUnarchivedTasksByGoal(1);
 
     expect(tasksReturn.length, tasks.length);
   });

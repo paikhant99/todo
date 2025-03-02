@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:iconsax_plus/iconsax_plus.dart';
+import 'package:todo/controller/goals_controller.dart';
 import 'package:todo/controller/tasks_controller.dart';
 import 'package:todo/views/widgets/my_delegate.dart';
 import 'package:todo/views/widgets/task_list.dart';
 
 class TasksPage extends StatefulWidget {
-  const TasksPage({super.key});
+  final String title;
+  final int goalId;
+  const TasksPage({super.key, this.title = 'Backlog', this.goalId = 1});
 
   @override
   State<TasksPage> createState() => _TasksPageState();
@@ -16,11 +19,13 @@ class _TasksPageState extends State<TasksPage>
     with SingleTickerProviderStateMixin {
   late TabController tabController;
   final tasksController = Get.find<TasksController>();
+  final goalsController = Get.find<GoalsController>();
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
+    tasksController.fetchTasks(goalId: widget.goalId);
     tabController = TabController(length: 2, vsync: this);
   }
 
@@ -38,7 +43,7 @@ class _TasksPageState extends State<TasksPage>
                   )
                 : null,
             title: Text(
-              'Backlog'.tr,
+              widget.title.tr,
               style: context.textTheme.titleLarge
                   ?.copyWith(fontWeight: FontWeight.w600),
             ),
@@ -47,6 +52,7 @@ class _TasksPageState extends State<TasksPage>
                 visible: tasksController.isMultipleSelected.isTrue,
                 child: IconButton(onPressed: (){
                   tasksController.archiveTasks();
+                  goalsController.fetchGoals();
                 }, icon: const Icon(IconsaxPlusLinear.trash)),
               )
             ],
@@ -88,7 +94,7 @@ class _TasksPageState extends State<TasksPage>
               },
               body: TabBarView(
                 controller: tabController,
-                children: [
+                children: const [
                   TaskList(isCompleted: false),
                   TaskList(isCompleted: true)
                 ],
@@ -96,5 +102,11 @@ class _TasksPageState extends State<TasksPage>
             )),
       );
     });
+  }
+
+  @override
+  void dispose() {
+    tabController.dispose();
+    super.dispose();
   }
 }

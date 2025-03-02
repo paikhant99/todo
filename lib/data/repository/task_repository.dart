@@ -19,9 +19,9 @@ class TaskRepository {
     return taskDao.create(task);
   }
 
-  // (Load All Tasks) : Load all tasks
-  Future<List<Task>> loadAllTasks() {
-    return taskDao.readAllUnarchivedTasks();
+  // (Load All Tasks By Goal) : Load all tasks by goal
+  Future<List<Task>> loadAllTasksByGoal(int goalId) {
+    return taskDao.readAllUnarchivedTasksByGoal(goalId);
   }
 
   // (Mark Task Check) : Mark Task Completion as completed or in_progress
